@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sale.web.Data;
+using Sale.web.Helpers;
 
 namespace Sale.web
 {
@@ -38,7 +39,9 @@ namespace Sale.web
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-
+            services.AddTransient<SeedDb>();
+            services.AddScoped<IBlobHelper, BlobHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

@@ -14,9 +14,7 @@ namespace Sale.Common.Entities
         public string Name { get; set; }
 
         [Display(Name = "Image")]
-        public Guid ImageId { get; set; }
-
-        public ICollection<Product> Products { get; set; }
+        public Guid ImageId { get; set; }       
 
         //TODO: Pending to put the correct paths
         [Display(Name = "Image")]

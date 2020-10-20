@@ -1,11 +1,14 @@
 ﻿
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sale.Common.Entities;
+using Sale.web.Data.Entities;
 
 namespace Sale.web.Data
 {
-    public class DataContext:DbContext
+    public class DataContext:IdentityDbContext<User>
+
     {
         public DataContext(DbContextOptions<DataContext>options):base(options)
         {
@@ -15,11 +18,11 @@ namespace Sale.web.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<City>Cities { get; set; }
         public DbSet<Department>Departments { get; set; }
-
         public DbSet<Category> Categories { get; set; }
-
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> productImages { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

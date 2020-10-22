@@ -5,10 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Sale.Common.Request;
 using Sale.web.Data.Entities;
 using Sale.web.Helpers;
 using Sale.web.Models;
@@ -53,7 +56,7 @@ namespace Sale.web.Controllers.Api
                             _configuration["Tokens:Issuer"],
                             _configuration["Tokens:Audience"],
                             claims,
-                            expires: DateTime.UtcNow.AddYears(20),
+                            expires: DateTime.UtcNow.AddYears(15),
                             signingCredentials: credentials);
                         var results = new
                         {
@@ -69,7 +72,22 @@ namespace Sale.web.Controllers.Api
 
             return BadRequest();
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("GetUserByEmail")]
+        public async Task<IActionResult> GetUserByEmail([FromBody] emailrequest request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            User user = await _userHelper.GetUserAsync(request.Email);
+            if(user==null)
+            {
+                return NotFound("Error001");
+            }
+            return Ok(user);
+        }
     }
 }
 

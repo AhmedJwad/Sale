@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sale.web.Data;
 using Sale.web.Data.Entities;
+using Sale.web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,24 @@ namespace Sale.web.Helpers
         private readonly DataContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<User> _signInManager;
 
         public UserHelper(DataContext context,UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
             return await _userManager.CreateAsync(user, password);
         }
-
         public async Task AddUserToRoleAsync(User User, string roleName)
         {
             await _userManager.AddToRoleAsync(User, roleName);
         }
-
         public async Task CheckRoleAsync(string roleName)
         {
             bool roleExists = await _roleManager.RoleExistsAsync(roleName);
@@ -43,16 +44,34 @@ namespace Sale.web.Helpers
                 });
             }
         }
-
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users.Include(u => u.City)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
-
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            return await _signInManager.PasswordSignInAsync
+                (
+                  model.Username,
+                  model.Password,
+                  model.RememberMe,
+                  false
+                );
+        }
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string Password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, Password, false);
         }
     }
 }

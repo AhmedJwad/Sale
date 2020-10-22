@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using Sale.web.Models;
 
 namespace Sale.web.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class CategoriesController : Controller
     {
         private readonly DataContext _context;

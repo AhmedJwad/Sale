@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using Sale.web.Models;
 
 namespace Sale.web.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class ProductsController : Controller
     {
         private readonly DataContext _context;

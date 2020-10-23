@@ -155,8 +155,9 @@ namespace Sale.web.Controllers
                 return NotFound();
             }
             Country country = await _context.Countries
-                .Include(c=>c.Departments)
-                .ThenInclude(d=>d.Cities).FirstOrDefaultAsync(c=>c.Id==id);
+                .Include(c => c.Departments)
+                .ThenInclude(d => d.Cities)
+                .FirstOrDefaultAsync(c=>c.Id==id);
             _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

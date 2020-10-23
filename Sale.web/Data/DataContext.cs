@@ -26,21 +26,33 @@ namespace Sale.web.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Country>()
-               .HasIndex(c => c.Name)
-               .IsUnique();
-            modelBuilder.Entity<City>()
-              .HasIndex(c => c.Name)
-              .IsUnique();
-            modelBuilder.Entity<Department>()
-             .HasIndex(c => c.Name)
-             .IsUnique();
+           
             modelBuilder.Entity<Category>()
            .HasIndex(c => c.Name)
            .IsUnique();
             modelBuilder.Entity<Product>()
-         .HasIndex(c => c.Name)
-         .IsUnique();
+            .HasIndex(c => c.Name)
+            .IsUnique();
+
+            modelBuilder.Entity<Country>(cou =>
+            {
+                cou.HasIndex("Name").IsUnique();
+                cou.HasMany(c => c.Departments).WithOne(d => d.Country)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+            modelBuilder.Entity<Department>(dep =>
+            {
+                dep.HasIndex("Name", "CountryId").IsUnique();
+                dep.HasOne(d => d.Country).WithMany(c => c.Departments)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<City>(cty =>
+            {
+                cty.HasIndex("Name", "DepartmentId").IsUnique();
+                cty.HasOne(c => c.Department).WithMany(c => c.Cities)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
         }
 
     }

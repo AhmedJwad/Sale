@@ -111,7 +111,7 @@ namespace Sale.web.Controllers
                 try
                 {
                     Product product = await _converterHelper.ToProductAsync(model, false);
-                   
+                   if(model.ImageFile!=null)
                     {
                         Guid imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
                         if (product.ProductImages == null)

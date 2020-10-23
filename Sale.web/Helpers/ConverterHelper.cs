@@ -3,6 +3,7 @@ using Sale.web.Data;
 using Sale.web.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,9 +49,25 @@ namespace Sale.web.Helpers
                 IsActive=model.IsActive,
                 IsStarred=model.IsStarred,
                 Name=model.Name,
-                Price=model.Price,
-                ProductImages=model.ProductImages,
+                Price = ToPrice(model.PriceString),
+                ProductImages =model.ProductImages,
             };
+        }
+
+        private decimal ToPrice(string priceString)
+        {
+            string nds = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            if (nds == ".")
+            {
+                priceString = priceString.Replace(',', '.');
+
+            }
+            else
+            {
+                priceString = priceString.Replace('.', ',');
+            }
+
+            return decimal.Parse(priceString);
         }
 
         public ProductViewModel ToProductViewModel(Product product)
@@ -65,7 +82,7 @@ namespace Sale.web.Helpers
                 IsActive = product.IsActive,
                 IsStarred = product.IsStarred,
                 Name = product.Name,
-                Price = product.Price,
+                PriceString = $"{product.Price}",
                 ProductImages = product.ProductImages
             };
         }

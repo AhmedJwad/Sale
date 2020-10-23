@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Sale.Common.Enums;
 using Sale.web.Data;
 using Sale.web.Data.Entities;
 using Sale.web.Models;
@@ -29,6 +30,32 @@ namespace Sale.web.Helpers
         {
             return await _userManager.CreateAsync(user, password);
         }
+
+        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType)
+        {
+            User user = new User
+            {
+                Address=model.Address,
+                FirstName=model.FirstName,
+                LastName=model.LastName,
+                ImageId=imageId,
+                Email=model.Username,
+                PhoneNumber=model.PhoneNumber,
+                City=await _context.Cities.FindAsync(model.CityId),
+                UserType= userType,
+                UserName=model.Username,
+            };
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if(result!=IdentityResult.Success)
+            {
+                return null;
+            }
+
+            User newuser = await GetUserAsync(model.Username);
+            await AddUserToRoleAsync(newuser, user.UserType.ToString());
+            return newuser;
+        }
+
         public async Task AddUserToRoleAsync(User User, string roleName)
         {
             await _userManager.AddToRoleAsync(User, roleName);

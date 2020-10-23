@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Sale.Common.Enums;
 using Sale.web.Data.Entities;
 using Sale.web.Models;
+using System;
 using System.Threading.Tasks;
 
 
@@ -17,8 +19,7 @@ namespace Sale.web.Helpers
        Task<Microsoft.AspNetCore.Identity.SignInResult> LoginAsync(LoginViewModel model);
         Task LogoutAsync();
         Task<Microsoft.AspNetCore.Identity.SignInResult> ValidatePasswordAsync(User user, string Password);
-
-
+        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType);
     }
 
 }

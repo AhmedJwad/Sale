@@ -20,6 +20,9 @@ namespace Sale.web.Helpers
         Task LogoutAsync();
         Task<Microsoft.AspNetCore.Identity.SignInResult> ValidatePasswordAsync(User user, string Password);
         Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType);
+        Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
+        Task<IdentityResult> UpdateUserAsync(User user);
+        Task<User> GetUserAsync(Guid userId);
     }
 
 }

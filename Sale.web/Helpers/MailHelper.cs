@@ -22,9 +22,9 @@ namespace Sale.web.Helpers
                 string from = _configuration["Mail:From"];
                 string smtp = _configuration["Mail:Smtp"];
                 string Port = _configuration["Mail:Port"];
-                string password = _configuration["Mail:Password"];
+                string password = _configuration["Mail:Password"];               
                 MimeMessage message = new MimeMessage();
-                message.From.Add(new MailboxAddress(from));
+                message.From.Add(new MailboxAddress(from));             
                 message.To.Add(new MailboxAddress(to));
                 message.Subject = subject;
                 BodyBuilder bodyBuilder = new BodyBuilder()

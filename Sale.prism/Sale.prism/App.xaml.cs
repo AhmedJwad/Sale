@@ -19,7 +19,7 @@ namespace Sale.prism
 
         protected override async void OnInitialized()
         {
-            SyncfusionLicenseProvider.RegisterLicense("MjExMTY0QDMxMzcyZTM0MmUzMEc1K2xKbkhrV2RmMHByRXF6YUJDQlQ3RkxLZ3hxOVlyMHY0T1RiSUFEZUk9");
+            SyncfusionLicenseProvider.RegisterLicense("MzQ3MjAzQDMxMzgyZTMzMmUzMGNFSnhwRTFkTmV1V0FhcDB0d28xank5V2xEOWltVG1pZmZwUTNtdnVhb2s9");
             InitializeComponent();
             await NavigationService.NavigateAsync($"NavigationPage/{nameof(ProductsPage)}");
         }
@@ -31,6 +31,7 @@ namespace Sale.prism
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ProductsPage, ProductsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProductDetailPage, ProductDetailPageViewModel>();
         }
     }
 }

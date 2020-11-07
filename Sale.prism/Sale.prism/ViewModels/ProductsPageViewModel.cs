@@ -3,6 +3,8 @@ using Prism.Navigation;
 using Sale.Common.Entities;
 using Sale.Common.Responses;
 using Sale.Common.Services;
+using Sale.prism.Helpers;
+using Sale.prism.ItemViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +20,7 @@ namespace Sale.prism.ViewModels
         private bool _isRefreshing;
         private string _search;
         private List<Product> _myproducts;
-        private ObservableCollection<Product> _products;
+        private ObservableCollection<ProductItemViewModel> _products;
         private DelegateCommand _refreshCommand;
         private DelegateCommand _searchCommand;
 
@@ -26,7 +28,7 @@ namespace Sale.prism.ViewModels
         {
             _navigationservice = navigationservice;
             _apiService = apiService;
-            Title = "Products";
+            Title = Languages.Products;
             LoadProductsAsync();
         }   
 
@@ -47,18 +49,39 @@ namespace Sale.prism.ViewModels
 
         private void ShowProducts()
         {
-           if(string.IsNullOrEmpty(Search))
+            if (string.IsNullOrEmpty(Search))
             {
-                Products = new ObservableCollection<Product>(_myproducts);
+                Products = new ObservableCollection<ProductItemViewModel>(_myproducts
+                    .Select(p => new ProductItemViewModel(_navigationservice)
+                    {
+                        Category=p.Category,
+                        Price=p.Price,
+                        Description=p.Description,
+                        IsActive=p.IsActive,
+                        IsStarred=p.IsStarred,                      
+                        Name=p.Name,
+                        ProductImages=p.ProductImages,
+                        Id=p.Id,
+                    }).ToList());              
             }
            else
             {
-                Products = new ObservableCollection<Product>(_myproducts.
-                    Where(p=>p.Name.ToLower().Contains(Search.ToLower())));
+                Products = new ObservableCollection<ProductItemViewModel>(_myproducts
+                    .Select(p=> new ProductItemViewModel(_navigationservice) 
+                    {
+                        Category = p.Category,
+                        Price = p.Price,
+                        Description = p.Description,
+                        IsActive = p.IsActive,
+                        IsStarred = p.IsStarred,
+                        Name = p.Name,
+                        ProductImages = p.ProductImages,
+                        Id = p.Id,
+                    }).Where(p=>p.Name.ToLower().Contains(Search.ToLower())).ToList());
             }
         }
 
-        public ObservableCollection<Product>Products
+        public ObservableCollection<ProductItemViewModel>Products
         {
             get => _products;
             set => SetProperty(ref _products, value);
@@ -68,7 +91,7 @@ namespace Sale.prism.ViewModels
             if(Connectivity.NetworkAccess!=NetworkAccess.Internet)
             {
                 IsRefreshing = false;
-                await App.Current.MainPage.DisplayAlert("Error", "there is no internet connection", "Accept");
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError,Languages.Accept);
                 return;
             }
             IsRefreshing = true;
@@ -78,7 +101,7 @@ namespace Sale.prism.ViewModels
             if(!respons.IsSuccess)
             {
                 IsRefreshing = false;
-                await App.Current.MainPage.DisplayAlert("error", respons.Message, "Accept");
+                await App.Current.MainPage.DisplayAlert(Languages.Error, respons.Message, Languages.Accept);
                 return;
             }
            _myproducts = (List<Product>)respons.Result;

@@ -6,12 +6,15 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
+             xmlns:i18n="clr-namespace:Sale.prism.Helpers"
              x:Class="Sale.prism.Views.ProductsPage"
+             FlowDirection="{x:Static Device.FlowDirection}" 
+             BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 
     <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                  AbsoluteLayout.LayoutFlags="All" Padding="5">
-        <SearchBar Placeholder="Search a Product.."
+        <SearchBar Placeholder="{i18n:Translate SearchProduct}"
                    SearchCommand="{Binding SearchCommand }"
                    Text="{Binding Search}"/>
         <RefreshView IsRefreshing="{Binding IsRefreshing}"
@@ -23,6 +26,9 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectProductCommand}"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>

@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+using Android.OS;
 using AndroidX.AppCompat.App;
 
 namespace Sale.prism.Droid
@@ -16,4 +17,5 @@ namespace Sale.prism.Droid
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
         }
     }
+
 }

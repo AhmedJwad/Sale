@@ -31,5 +31,19 @@ namespace Sale.prism.Helpers
         public static string AddToCart => Resource.AddToCart;
         public static string Product => Resource.Product;
         public static string Products => Resource.Products;
+        public static string Login => Resource.Login;
+        public static string ShowShoppingCar => Resource.ShowShoppingCar;
+        public static string ShowPurchaseHistory => Resource.ShowPurchaseHistory;
+        public static string ModifyUser => Resource.ModifyUser;
+        public static string Email => Resource.Email;
+        public static string EmailError => Resource.EmailError;
+        public static string EmailPlaceHolder => Resource.EmailPlaceHolder;
+        public static string Password => Resource.Password;
+        public static string PasswordError => Resource.PasswordError;
+        public static string PasswordPlaceHolder => Resource.PasswordPlaceHolder;
+        public static string ForgotPassword => Resource.ForgotPassword;
+        public static string LoginError => Resource.LoginError;
+        public static string Logout => Resource.Logout;
+        public static string Register => Resource.Register;
     }
 }

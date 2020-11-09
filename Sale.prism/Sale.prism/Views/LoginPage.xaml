@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:i18n="clr-namespace:Sale.prism.Helpers"
+             x:Class="Sale.prism.Views.LoginPage"
+             FlowDirection="{x:Static Device.FlowDirection}" 
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"           
+                    AbsoluteLayout.LayoutFlags="All"
+                    Padding="10">
+            <ScrollView>
+                <StackLayout>
+                    <Image HeightRequest="150"
+                           Margin="20"
+                           Source="Sale"/>
+                    <StackLayout VerticalOptions="CenterAndExpand">
+                        <Label Text="{i18n:Translate Email}"/>
+                        <Entry
+                            Keyboard="Email"
+                            Text="{Binding Email}"
+                            Placeholder="{i18n:Translate EmailPlaceHolder}"/>
+                        <Label Text="{i18n:Translate Password}"/>
+                        <Entry IsPassword="True"
+                               Text="{Binding Password}"
+                               Placeholder="{i18n:Translate PasswordPlaceHolder}"/>
+                    </StackLayout>
+                    <Label FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Text="{i18n:Translate ForgotPassword }"
+                           TextColor="{StaticResource ColorAccent}"
+                           VerticalOptions="CenterAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>                          
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <ActivityIndicator IsRunning="{Binding IsRunning}"
+                                   Color="Red"/>
+                </StackLayout>             
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand">               
+                <Button Command="{Binding LoginCommand}" 
+                        IsEnabled="{Binding IsEnabled}"
+                        Text="{i18n:Translate Login}"/>
+                <Button Command="{Binding RegisterCommand}" 
+                        IsEnabled="{Binding IsEnabled}"
+                        Text="{i18n:Translate Register}"
+                        Style="{StaticResource DangerButton}"/>           
+        </StackLayout>
+        </StackLayout>
+    </AbsoluteLayout>  
+</ContentPage>

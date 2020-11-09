@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:i18n="clr-namespace:Sale.prism.Helpers"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Sale.prism.Views.ModifyUserPage"
+             FlowDirection="{x:Static Device.FlowDirection}" 
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+  
+</ContentPage>

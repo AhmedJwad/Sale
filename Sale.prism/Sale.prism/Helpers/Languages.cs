@@ -45,5 +45,6 @@ namespace Sale.prism.Helpers
         public static string LoginError => Resource.LoginError;
         public static string Logout => Resource.Logout;
         public static string Register => Resource.Register;
+        public static string LoginFirstMessage => Resource.LoginFirstMessage;
     }
 }

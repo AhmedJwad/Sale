@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using Sale.Common.Helpers;
 using Sale.Common.Models;
+using Sale.prism.Helpers;
 using Sale.prism.Views;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,21 @@ namespace Sale.prism.ItemViewModels
                 Settings.IsLogin = false;
                 Settings.Token = null;
             }
-            await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}" +
-                $"/NavigationPage/{PageName}");
+            if(!IsLoginRequired && !Settings.IsLogin)
+            {
+                await App.Current.MainPage.DisplayAlert(Languages.Error,
+                    Languages.LoginFirstMessage, Languages.Accept);
+                NavigationParameters parameters = new NavigationParameters
+                {
+                    {"pageReturn", PageName }
+                };
+                await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(LoginPage)}", parameters);
+            }
+            else
+            {
+                await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}" +
+              $"/NavigationPage/{PageName}");
+            }          
         }
     }
 }

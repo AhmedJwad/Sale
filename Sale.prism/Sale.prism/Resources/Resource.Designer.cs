@@ -178,6 +178,15 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must be logged in to complete this action. You can login or register as a user below.
+        /// </summary>
+        public static string LoginFirstMessage {
+            get {
+                return ResourceManager.GetString("LoginFirstMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         public static string Logout {

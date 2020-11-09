@@ -195,4 +195,7 @@
   <data name="Logout" xml:space="preserve">
     <value>تسجيل الخروج</value>
   </data>
+  <data name="LoginFirstMessage" xml:space="preserve">
+    <value>يجب تسجيل الدخول لإكمال هذا الإجراء. يمكنك تسجيل الدخول أو التسجيل كمستخدم جديد  </value>
+  </data>
 </root>

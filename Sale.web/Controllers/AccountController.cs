@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,74 @@ namespace Sale.web.Controllers
             _blobHelper = blobHelper;
             _combosHelper = combosHelper;
             _mailHelper = mailHelper;
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Users
+                .Include(u => u.City)
+                .ToListAsync());
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            AddUserViewModel model = new AddUserViewModel
+            {
+                Countries = _combosHelper.GetComboCountries(),
+                Departments = _combosHelper.GetComboDepartments(0),
+                Cities = _combosHelper.GetComboCities(0),
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = Guid.Empty;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.AddUserAsync(model, imageId, UserType.Admin);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "This email is already used.");
+                    model.Countries = _combosHelper.GetComboCountries();
+                    model.Departments = _combosHelper.GetComboDepartments(model.CountryId);
+                    model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
+                    return View(model);
+                }
+
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                    $"To allow the user, " +
+                    $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "The instructions to allow your user has been sent to email.";
+                    return View(model);
+                }
+
+                ModelState.AddModelError(string.Empty, response.Message);
+            }
+
+            model.Countries = _combosHelper.GetComboCountries();
+            model.Departments = _combosHelper.GetComboDepartments(model.CountryId);
+            model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
+            return View(model);
         }
 
         public IActionResult Login()

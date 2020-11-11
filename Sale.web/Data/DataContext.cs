@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sale.Common.Entities;
 using Sale.web.Data.Entities;
+using OrderDetail = Sale.web.Data.Entities.OrderDetail;
 
 namespace Sale.web.Data
 {
@@ -23,6 +24,8 @@ namespace Sale.web.Data
         public DbSet<ProductImage> productImages { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Qualification> Qualifications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

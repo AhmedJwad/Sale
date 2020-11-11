@@ -72,22 +72,39 @@ namespace Sale.web.Controllers.Api
 
             return BadRequest();
         }
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost]
-        [Route("GetUserByEmail")]
-        public async Task<IActionResult> GetUserByEmail([FromBody] emailrequest request)
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[HttpPost]
+        //[Route("GetUserByEmail")]
+        //public async Task<IActionResult> GetUserByEmail([FromBody] emailrequest request)
+        //{
+        //    if(!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    User user = await _userHelper.GetUserAsync(request.Email);
+        //    if(user==null)
+        //    {
+        //        return NotFound("Error001");
+        //    }
+        //    return Ok(user);
+        //}
+        [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            User user = await _userHelper.GetUserAsync(request.Email);
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _userHelper.GetUserAsync(email);
             if(user==null)
             {
                 return NotFound("Error001");
             }
             return Ok(user);
         }
+
     }
 }
 

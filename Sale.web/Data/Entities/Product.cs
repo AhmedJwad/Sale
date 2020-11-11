@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Sale.Common.Entities;
+using Sale.web.Data.Entities;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Sale.Common.Entities
+namespace Sale.web.Data.Entities
 {
     public class Product
     {
@@ -37,6 +39,11 @@ namespace Sale.Common.Entities
         public string ImageFullPath => ProductImages == null || ProductImages.Count == 0
             ? $"https://salewebahmed.azurewebsites.net/images/noimage.png"
             : ProductImages.FirstOrDefault().ImageFullPath;
+        public ICollection<Qualification> Qualifications { get; set; }
+        [Display(Name = "Product Qualifications")]
+        public int ProductQualifications => Qualifications == null ? 0 : Qualifications.Count;
 
+        public float Qualification => Qualifications == null || Qualifications.Count == 0 ? 0 :
+            Qualifications.Average(Q => Q.Score);
     }
 }

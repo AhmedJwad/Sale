@@ -19,7 +19,7 @@ namespace Sale.prism.ViewModels
         private readonly IApiService _apiService;
         private bool _isRefreshing;
         private string _search;
-        private List<Product> _myproducts;
+        private List<ProductResponse> _myproducts;
         private ObservableCollection<ProductItemViewModel> _products;
         private DelegateCommand _refreshCommand;
         private DelegateCommand _searchCommand;
@@ -96,7 +96,7 @@ namespace Sale.prism.ViewModels
             }
             IsRefreshing = true;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            Response respons = await _apiService.GetListAsync<Product>(url, "/api", "/Products");
+            Response respons = await _apiService.GetListAsync<ProductResponse>(url, "/api", "/Products");
             IsRefreshing = false;
             if(!respons.IsSuccess)
             {
@@ -104,7 +104,7 @@ namespace Sale.prism.ViewModels
                 await App.Current.MainPage.DisplayAlert(Languages.Error, respons.Message, Languages.Accept);
                 return;
             }
-           _myproducts = (List<Product>)respons.Result;
+           _myproducts = (List<ProductResponse>)respons.Result;
             ShowProducts();         
         }
         public DelegateCommand RefreshCommand => _refreshCommand ??

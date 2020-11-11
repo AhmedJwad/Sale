@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using Sale.Common.Entities;
+using Sale.Common.Responses;
 using Sale.prism.Helpers;
 using Sale.prism.ItemViewModels;
 using System;
@@ -14,7 +15,7 @@ namespace Sale.prism.ViewModels
     public class ProductDetailPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private Product _product;
+        private ProductResponse _product;
         private ObservableCollection<ProductImage> _images;
 
         public ProductDetailPageViewModel(INavigationService navigationService):base(navigationService)
@@ -28,7 +29,7 @@ namespace Sale.prism.ViewModels
             get => _images;
             set => SetProperty(ref _images, value);
         }
-        public Product product
+        public ProductResponse product
         {
             get => _product;
             set => SetProperty(ref _product, value);
@@ -39,7 +40,7 @@ namespace Sale.prism.ViewModels
             base.OnNavigatedTo(parameters); 
             if(parameters.ContainsKey("product"))
             {
-                product = parameters.GetValue<Product>("product");
+                product = parameters.GetValue<ProductResponse>("product");
                 Title = product.Name;
                 Images = new ObservableCollection<ProductImage>(product.ProductImages);
             }

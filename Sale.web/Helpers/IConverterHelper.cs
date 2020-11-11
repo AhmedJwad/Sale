@@ -1,4 +1,5 @@
 ﻿using Sale.Common.Entities;
+using Sale.web.Data.Entities;
 using Sale.web.Models;
 using System;
 using System.Collections.Generic;

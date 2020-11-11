@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sale.web.Data;
+using Sale.web.Data.Entities;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sale.web.Controllers.Api
 {
@@ -17,11 +20,14 @@ namespace Sale.web.Controllers.Api
         }
 
         [HttpGet]
-        public IActionResult GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            return Ok(_context.Products.Include(p => p.Category)
-                .Include(p=>p.ProductImages)
-                .OrderBy(p=>p.Name));
+            List<Product> products = await _context.Products.Include(p => p.Category)
+                .Include(p => p.ProductImages)
+                .Include(p => p.Qualifications)
+                .Where(p => p.IsActive)
+               .ToListAsync();
+            return Ok(products);
         }
     }
 }

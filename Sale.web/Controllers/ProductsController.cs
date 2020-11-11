@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Sale.Common.Entities;
 using Sale.web.Data;
+using Sale.web.Data.Entities;
 using Sale.web.Helpers;
 using Sale.web.Models;
 
@@ -31,7 +32,9 @@ namespace Sale.web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View( await _context.Products.Include(p=>p.Category).Include(p=>p.ProductImages).ToArrayAsync());
+            return View( await _context.Products.Include(p=>p.Category)
+                .Include(p=>p.ProductImages).Include(p => p.Qualifications)
+               .ToArrayAsync());
         }
 
         public IActionResult Create()
@@ -179,8 +182,12 @@ namespace Sale.web.Controllers
             {
                 return NotFound();
             }
-            Product product = await _context.Products.Include(p => p.Category)
-                .Include(p => p.ProductImages).FirstOrDefaultAsync(p => p.Id == id);
+            Product product = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.ProductImages)
+                .Include(c => c.Qualifications)
+                .ThenInclude(q => q.User)
+                .FirstOrDefaultAsync(p => p.Id == id);
             if(product==null)
             {
                 return NotFound();

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace Sale.Common.Entities
+namespace Sale.web.Data.Entities
 {
     public class OrderDetail
     {

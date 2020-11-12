@@ -11,6 +11,7 @@ using Sale.Common.Entities;
 using Sale.web.Data;
 using Sale.web.Helpers;
 using Sale.web.Models;
+using Vereyon.Web;
 
 namespace Sale.web.Controllers
 {
@@ -20,12 +21,15 @@ namespace Sale.web.Controllers
         private readonly DataContext _context;
         private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly IFlashMessage _flashMessage;
 
-        public CategoriesController(DataContext context, IBlobHelper blobHelper, IConverterHelper converterHelper)
+        public CategoriesController(DataContext context, IBlobHelper blobHelper
+            , IConverterHelper converterHelper, IFlashMessage flashMessage)
         {
             _context = context;
            _blobHelper = blobHelper;
            _converterHelper = converterHelper;
+            _flashMessage = flashMessage;
         }
 
         // GET: Categories
@@ -182,11 +186,14 @@ namespace Sale.web.Controllers
             {
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync();
+                _flashMessage.Confirmation("The category was deleted.");
+
             }
-            catch (Exception Ex)
+            catch 
             {
 
-                ModelState.AddModelError(string.Empty, Ex.Message);
+                _flashMessage.Danger("The category can't be deleted because it has related records.");
+
             }
 
             return RedirectToAction(nameof(Index));

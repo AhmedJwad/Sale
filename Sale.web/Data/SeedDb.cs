@@ -31,29 +31,49 @@ namespace Sale.web.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckCountriesAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("1010", "Juan", "Zuluaga", "jzuluaga55@hotmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckUserAsync("Ahmed", "Almershady", "Amm380@yahoo.com", "322 311 4620", "Babil", UserType.Admin);
             await CheckCategoriesAsync();
             await CheckProductsAsync();
         }
 
         private async Task CheckProductsAsync()
         {
-            if (!_context.Products.Any())
+           if(!_context.Products.Any())
             {
-                User user = await _userHelper.GetUserAsync("jzuluaga55@hotmail.com");
-                Category mascotas = await _context.Categories.FirstOrDefaultAsync(c => c.Name == "Mascotas");
-                Category ropa = await _context.Categories.FirstOrDefaultAsync(c => c.Name == "Ropa");
-                Category tecnologia = await _context.Categories.FirstOrDefaultAsync(c => c.Name == "Tecnología");
-                string lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida, nunc vel tristique cursus, velit nibh pulvinar enim, non pulvinar lorem leo eget felis. Proin suscipit dignissim nisl, at elementum justo laoreet sed. In tortor nibh, auctor quis est gravida, blandit elementum nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer placerat nisi dui, id rutrum nisi viverra at. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque sodales sollicitudin tempor. Fusce volutpat, purus sit amet placerat gravida, est magna gravida risus, a ultricies augue magna vel dolor. Fusce egestas venenatis velit, a ultrices purus aliquet sed. Morbi lacinia purus sit amet nisi vulputate mollis. Praesent in volutpat tortor. Etiam ac enim id ligula rutrum semper. Sed mattis erat sed condimentum congue. Vestibulum consequat tristique consectetur. Nunc in lorem in sapien vestibulum aliquet a vel leo.";
-                await AddProductAsync(mascotas, lorem, "Bulldog Frances", 2500000M, new string[] { "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4" }, user);
-                await AddProductAsync(ropa, lorem, "Buso GAP Hombre", 85000M, new string[] { "BusoGAP1", "BusoGAP2" }, user);
-                await AddProductAsync(tecnologia, lorem, "iPhone 11", 3500000M, new string[] { "iPhone1", "iPhone2", "iPhone3", "iPhone4", "iPhone5" }, user);
-                await AddProductAsync(tecnologia, lorem, "iWatch \"42", 2100000M, new string[] { "iWatch" }, user);
-                await AddProductAsync(ropa, lorem, "Tennis Adidas", 250000M, new string[] { "Adidas" }, user);
-                await AddProductAsync(mascotas, lorem, "Collie", 350000M, new string[] { "Collie1", "Collie2", "Collie3", "Collie4", "Collie5" }, user);
-                await AddProductAsync(tecnologia, lorem, "MacBook Pro 16\" 1TB", 12000000M, new string[] { "MacBookPro1", "MacBookPro2", "MacBookPro3", "MacBookPro4" }, user);
-                await AddProductAsync(ropa, lorem, "Sudadera Mujer", 95000M, new string[] { "Sudadera1", "Sudadera2", "Sudadera3", "Sudadera4", "Sudadera5" }, user);
+                User user = await _userHelper.GetUserAsync("Amm380@yahoo.com");
+                Category Laptop = await _context.Categories.FirstOrDefaultAsync(C => C.Name == "Laptop");
+                Category Mobile = await _context.Categories.FirstOrDefaultAsync(C => C.Name == "Mobile");
+                Category accesories = await _context.Categories.FirstOrDefaultAsync(C => C.Name == "accesories");
+                String description= "Lorem ipsum dolor sit amet," +
+                    " consectetur adipiscing elit. Moors pregnant," +
+                    " now running or sad, outdoor volleyball nibh we do not need pillow lorem vegetarian " +
+                    "recipes. Microwave undertakes soccer players, but the element Tech yet." +
+                    " The temperature dolor who is pregnant sit element zero." +
+                    " Class began Employment twist by our marriage, per himenaeos." +
+                    " Integer invest only Pakistan, but the makeup pull at it. " +
+                    "Sometimes they malesuada hunger and at the first taste." +
+                    " Members of nutrition care time. Clinical weekend," +
+                    " chili carrots invest pregnant, is pregnant with laughter," +
+                    " a ultricies even more great pain. Fusce egestas venenatis velit," +
+                    " a ultrices purus aliquet sed." +
+                    " Vulputate soccer graph carrots until soft. Present the weekend temperature. Always," +
+                    " also, and, for that was at pulvinar ligula. However, there was a lot of sauce," +
+                    " but across the country. Manufacturing photography sad enhanced." +
+                    " In lorem sapien now in the manufacturing of bananas or a lion..";
+                await AddProductAsync(Laptop, description, "Acer", 25000M, new String[]
+                {
+                    "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4"
+                },user);
+                await AddProductAsync(Mobile, description, "Acer", 25000M, new String[]
+               {
+                    "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4"
+               }, user);
+                await AddProductAsync(accesories, description, "Acer", 25000M, new String[]
+             {
+                    "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4"
+             }, user);
                 await _context.SaveChangesAsync();
+
             }
         }
 
@@ -63,20 +83,19 @@ namespace Sale.web.Data
             {
                 Category = category,
                 Description = description,
-                IsActive = true,
                 Name = name,
                 Price = price,
-                ProductImages = new List<ProductImage>(),
-                Qualifications = GetRandomQualifications(description, user)
+               ProductImages = new List<ProductImage>(),
+              Qualifications = GetRandomQualifications(description, user),
+              IsActive=true,
+              IsStarred=false,
             };
-
-            foreach (string image in images)
-            {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images", $"{image}.png");
-                Guid imageId = await _blobHelper.UploadBlobAsync(path, "products");
-                product.ProductImages.Add(new ProductImage { ImageId = imageId });
-            }
-
+            //foreach (var image in images)
+            //{
+            //    string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images", $"{image}.png");
+            //    Guid imageId = await _blobHelper.UploadBlobAsync(path, "products");
+            //    product.ProductImages.Add(new ProductImage { ImageId = imageId });
+            //}
             _context.Products.Add(product);
         }
 
@@ -87,32 +106,57 @@ namespace Sale.web.Data
             {
                 qualifications.Add(new Qualification
                 {
-                    Date = DateTime.UtcNow,
-                    Remarks = description,
-                    Score = _random.Next(1, 5),
-                    User = user
+                    Date=DateTime.UtcNow,
+                    Remarks=description,
+                    Score=_random.Next(1,5),
+                    User=user,
+
                 });
             }
-
             return qualifications;
         }
 
         private async Task CheckCategoriesAsync()
         {
-            if (!_context.Categories.Any())
+            if(!_context.Categories.Any())
             {
-                await AddCategoryAsync("Ropa");
-                await AddCategoryAsync("Tecnología");
-                await AddCategoryAsync("Mascotas");
+                await AddCategoryAsync("Laptop");
+                await AddCategoryAsync("Mobile");
+                await AddCategoryAsync("accesories");
                 await _context.SaveChangesAsync();
             }
         }
 
         private async Task AddCategoryAsync(string name)
+        {           
+                //string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images", $"{name}.png");
+                //Guid imageId = await _blobHelper.UploadBlobAsync(path, "categories");     
+               _context.Categories.Add(new Category { Name = name });
+
+        }
+
+        private async Task<User> CheckUserAsync(string firstname,string lastname, string email, string phonenumber, string address, UserType usertype)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images", $"{name}.png");
-            Guid imageId = await _blobHelper.UploadBlobAsync(path, "categories");
-            _context.Categories.Add(new Category { Name = name, ImageId = imageId });
+            User user = await _userHelper.GetUserAsync(email);
+            if(user==null)
+            {
+                user = new User
+                {
+                    FirstName = firstname,
+                    LastName = lastname,
+                    PhoneNumber = phonenumber,
+                    Address = address,
+                    Email = email,
+                    UserName = email,
+                    UserType = usertype,
+                    City = _context.Cities.FirstOrDefault(),
+                };
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, usertype.ToString());
+                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+            }
+            return user;
         }
 
         private async Task CheckRolesAsync()
@@ -121,110 +165,68 @@ namespace Sale.web.Data
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
         }
 
-        private async Task<User> CheckUserAsync(
-            string document,
-            string firstName,
-            string lastName,
-            string email,
-            string phone,
-            string address,
-            UserType userType)
-        {
-            User user = await _userHelper.GetUserAsync(email);
-            if (user == null)
-            {
-                user = new User
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    UserName = email,
-                    PhoneNumber = phone,
-                    Address = address,                    
-                    City = _context.Cities.FirstOrDefault(),
-                    UserType = userType
-                };
-
-                await _userHelper.AddUserAsync(user, "123456");
-                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
-
-                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                await _userHelper.ConfirmEmailAsync(user, token);
-            }
-
-            return user;
-        }
-
         private async Task CheckCountriesAsync()
         {
-            if (!_context.Countries.Any())
+           if(!_context.Countries.Any())
             {
                 _context.Countries.Add(new Country
                 {
-                    Name = "Colombia",
-                    Departments = new List<Department>
-                {
-                    new Department
+                    Name="Iraq",
+                    Departments=new List<Department> 
                     {
-                        Name = "Antioquia",
-                        Cities = new List<City>
+                        new Department
                         {
-                            new City { Name = "Medellín" },
-                            new City { Name = "Envigado" },
-                            new City { Name = "Itagüí" }
-                        }
-                    },
-                    new Department
-                    {
-                        Name = "Bogotá",
-                        Cities = new List<City>
+                            Name="Baghdad",
+                            Cities=new List<City>
+                            {
+                                new City{Name="AL mounsor"},
+                                new City{Name="Alkarada"},
+                                new City{Name="wathaq street"}
+                            }
+                        },
+                        new Department
                         {
-                            new City { Name = "Bogotá" }
-                        }
-                    },
-                    new Department
-                    {
-                        Name = "Valle del Cauca",
-                        Cities = new List<City>
-                        {
-                            new City { Name = "Calí" },
-                            new City { Name = "Buenaventura" },
-                            new City { Name = "Palmira" }
-                        }
+                            Name="Babylon",
+                            Cities=new List<City>
+                            {
+                                new City{Name="hay alhussein"},
+                                new City{Name="alkarama"},
+                                new City{Name="al jameaee"},
+                            }
+                        }                    
                     }
-                }
                 });
                 _context.Countries.Add(new Country
                 {
-                    Name = "USA",
-                    Departments = new List<Department>
-                {
-                    new Department
+                    Name="Usa",
+                    Departments=new List<Department>
                     {
-                        Name = "California",
-                        Cities = new List<City>
-                        {
+                       new Department
+                       {
+                           Name="California",
+                           Cities=new List<City>
+                           {
                             new City { Name = "Los Angeles" },
                             new City { Name = "San Diego" },
                             new City { Name = "San Francisco" }
-                        }
-                    },
-                    new Department
-                    {
-                        Name = "Illinois",
+                           }
+                       },
+                       new Department
+                       {
+                         Name = "Illinois",
                         Cities = new List<City>
                         {
                             new City { Name = "Chicago" },
                             new City { Name = "Springfield" }
                         }
-                    }
-                }
+
+                       }
+                    }                  
+                   
                 });
                 await _context.SaveChangesAsync();
             }
         }
     }
-
-
 }
 

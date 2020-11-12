@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Sale.web.Data;
 using Sale.web.Data.Entities;
 using Sale.web.Helpers;
+using Vereyon.Web;
 
 namespace Sale.web
 {
@@ -77,6 +78,7 @@ namespace Sale.web
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
+            services.AddFlashMessage();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

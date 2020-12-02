@@ -27,7 +27,7 @@ namespace Sale.Common.Responses
         public int ProductImagesNumber => ProductImages == null ? 0 : ProductImages.Count;
 
         public string ImageFullPath => ProductImages == null || ProductImages.Count == 0
-            ? $"https://salewebahmed.azurewebsites.net/images/noimage.png"
+            ? $"http://onsaleahmed.somee.com/images/noimage.png"
             : ProductImages.FirstOrDefault().ImageFullPath;
 
         public ICollection<QualificationResponse> Qualifications { get; set; }

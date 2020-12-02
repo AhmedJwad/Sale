@@ -37,7 +37,7 @@ namespace Sale.web.Data.Entities
         //TODO: Pending to put the correct paths
         [Display(Name = "Image")]
         public string ImageFullPath => ProductImages == null || ProductImages.Count == 0
-            ? $"https://salewebahmed.azurewebsites.net/images/noimage.png"
+            ? $"https://localhost:44384/images/noimage.png"
             : ProductImages.FirstOrDefault().ImageFullPath;
         public ICollection<Qualification> Qualifications { get; set; }
         [Display(Name = "Product Qualifications")]

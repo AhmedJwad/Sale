@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Sale.Common\Sale.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\categories\" />
+    <Folder Include="wwwroot\images\users\" />
+    <Folder Include="wwwroot\images\product\" />
+  </ItemGroup>
+
 </Project>

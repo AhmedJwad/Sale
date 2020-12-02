@@ -10,7 +10,7 @@ namespace Sale.web.Helpers
 {
    public interface IConverterHelper
     {
-        Category ToCategory(CategoryViewModel model, Guid ImageId, bool iSNew);
+        Category ToCategory(CategoryViewModel model, string ImageId, bool iSNew);
         CategoryViewModel ToCategoryView(Category category);
 
         Task<Product> ToProductAsync(ProductViewModel model, bool isNew);

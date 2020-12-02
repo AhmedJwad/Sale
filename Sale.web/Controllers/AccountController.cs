@@ -23,15 +23,18 @@ namespace Sale.web.Controllers
         private readonly IBlobHelper _blobHelper;
         private readonly ICombosHelper _combosHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly IImageHelper _imageHelper;
 
         public AccountController(DataContext context, IUserHelper userHelper,
-             IBlobHelper blobHelper, ICombosHelper combosHelper, IMailHelper mailHelper)
+             IBlobHelper blobHelper, ICombosHelper combosHelper, IMailHelper mailHelper
+            ,IImageHelper imageHelper)
         {
             _context = context;
             _userHelper = userHelper;
             _blobHelper = blobHelper;
             _combosHelper = combosHelper;
             _mailHelper = mailHelper;
+            _imageHelper = imageHelper;
         }
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
@@ -60,11 +63,12 @@ namespace Sale.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Guid imageId = Guid.Empty;
+               string imageId = string.Empty;
 
                 if (model.ImageFile != null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    imageId = await _imageHelper.UploadImageAsync(model.ImageFile, "users");
                 }
 
                 User user = await _userHelper.AddUserAsync(model, imageId, UserType.Admin);
@@ -159,10 +163,11 @@ namespace Sale.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Guid imageId = Guid.Empty;
+                string imageId =string.Empty;
                 if (model.ImageFile != null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    imageId = await _imageHelper.UploadImageAsync(model.ImageFile, "users");
                 }
                 User user = await _userHelper.AddUserAsync(model, imageId, UserType.User);
                 if (user == null)
@@ -298,10 +303,11 @@ namespace Sale.web.Controllers
         {
             if(ModelState.IsValid)
             {
-                Guid ImagId = model.ImageId;
+                string ImagId = model.ImageId;
                 if(model.ImageFile!=null)
                 {
-                    ImagId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    //ImagId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    ImagId = await _imageHelper.UploadImageAsync(model.ImageFile, "users");
                 }
                 User user = await _userHelper.GetUserAsync(User.Identity.Name);
                 user.FirstName = model.FirstName;

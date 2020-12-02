@@ -22,14 +22,17 @@ namespace Sale.web.Controllers
         private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
         private readonly IFlashMessage _flashMessage;
+        private readonly IImageHelper _imageHelper;
 
         public CategoriesController(DataContext context, IBlobHelper blobHelper
-            , IConverterHelper converterHelper, IFlashMessage flashMessage)
+            , IConverterHelper converterHelper, IFlashMessage flashMessage,
+            IImageHelper imageHelper)
         {
             _context = context;
            _blobHelper = blobHelper;
            _converterHelper = converterHelper;
             _flashMessage = flashMessage;
+           _imageHelper = imageHelper;
         }
 
         // GET: Categories
@@ -70,10 +73,11 @@ namespace Sale.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Guid imageId = Guid.Empty;
+               var imageId = string.Empty;
                 if(model.ImageFile!=null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "categories");
+                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "categories");
+                    imageId = await _imageHelper.UploadImageAsync(model.ImageFile, "categories");
                 }
 
                 try
@@ -132,10 +136,11 @@ namespace Sale.web.Controllers
             {
                 return NotFound();
             }
-            Guid imageId = model.ImageId;
+            string imageId = model.ImageId;
             if(model.ImageFile!=null)
             {
-                imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "categories");
+                // imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "categories");
+                imageId = await _imageHelper.UploadImageAsync(model.ImageFile, "categories");
             }
 
             if (ModelState.IsValid)

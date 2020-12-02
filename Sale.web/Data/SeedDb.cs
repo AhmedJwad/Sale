@@ -38,42 +38,22 @@ namespace Sale.web.Data
 
         private async Task CheckProductsAsync()
         {
-           if(!_context.Products.Any())
+            if (!_context.Products.Any())
             {
                 User user = await _userHelper.GetUserAsync("Amm380@yahoo.com");
-                Category Laptop = await _context.Categories.FirstOrDefaultAsync(C => C.Name == "Laptop");
-                Category Mobile = await _context.Categories.FirstOrDefaultAsync(C => C.Name == "Mobile");
-                Category accesories = await _context.Categories.FirstOrDefaultAsync(C => C.Name == "accesories");
-                String description= "Lorem ipsum dolor sit amet," +
-                    " consectetur adipiscing elit. Moors pregnant," +
-                    " now running or sad, outdoor volleyball nibh we do not need pillow lorem vegetarian " +
-                    "recipes. Microwave undertakes soccer players, but the element Tech yet." +
-                    " The temperature dolor who is pregnant sit element zero." +
-                    " Class began Employment twist by our marriage, per himenaeos." +
-                    " Integer invest only Pakistan, but the makeup pull at it. " +
-                    "Sometimes they malesuada hunger and at the first taste." +
-                    " Members of nutrition care time. Clinical weekend," +
-                    " chili carrots invest pregnant, is pregnant with laughter," +
-                    " a ultricies even more great pain. Fusce egestas venenatis velit," +
-                    " a ultrices purus aliquet sed." +
-                    " Vulputate soccer graph carrots until soft. Present the weekend temperature. Always," +
-                    " also, and, for that was at pulvinar ligula. However, there was a lot of sauce," +
-                    " but across the country. Manufacturing photography sad enhanced." +
-                    " In lorem sapien now in the manufacturing of bananas or a lion..";
-                await AddProductAsync(Laptop, description, "Acer", 25000M, new String[]
-                {
-                    "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4"
-                },user);
-                await AddProductAsync(Mobile, description, "Acer", 25000M, new String[]
-               {
-                    "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4"
-               }, user);
-                await AddProductAsync(accesories, description, "Acer", 25000M, new String[]
-             {
-                    "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4"
-             }, user);
+                Category Laptop = await _context.Categories.FirstOrDefaultAsync(c => c.Name == "Laptop");
+                Category Mobile = await _context.Categories.FirstOrDefaultAsync(c => c.Name == "Mobile");
+                Category accesories = await _context.Categories.FirstOrDefaultAsync(c => c.Name == "accesories");
+                string lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris gravida, nunc vel tristique cursus, velit nibh pulvinar enim, non pulvinar lorem leo eget felis. Proin suscipit dignissim nisl, at elementum justo laoreet sed. In tortor nibh, auctor quis est gravida, blandit elementum nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer placerat nisi dui, id rutrum nisi viverra at. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque sodales sollicitudin tempor. Fusce volutpat, purus sit amet placerat gravida, est magna gravida risus, a ultricies augue magna vel dolor. Fusce egestas venenatis velit, a ultrices purus aliquet sed. Morbi lacinia purus sit amet nisi vulputate mollis. Praesent in volutpat tortor. Etiam ac enim id ligula rutrum semper. Sed mattis erat sed condimentum congue. Vestibulum consequat tristique consectetur. Nunc in lorem in sapien vestibulum aliquet a vel leo.";
+                await AddProductAsync(Laptop, lorem, "Acer", 2500000M, new string[] { "Bulldog1", "Bulldog2", "Bulldog3", "Bulldog4" }, user);
+                await AddProductAsync(Laptop, lorem, "Lenovo", 85000M, new string[] { "BusoGAP1", "BusoGAP2" }, user);
+                await AddProductAsync(Mobile, lorem, "iPhone 11", 3500000M, new string[] { "iPhone1", "iPhone2", "iPhone3", "iPhone4", "iPhone5" }, user);
+                await AddProductAsync(accesories, lorem, "iWatch \"42", 2100000M, new string[] { "iWatch" }, user);
+                await AddProductAsync(Laptop, lorem, "Apple", 250000M, new string[] { "Adidas" }, user);
+                await AddProductAsync(Laptop, lorem, "Collie", 350000M, new string[] { "Collie1", "Collie2", "Collie3", "Collie4", "Collie5" }, user);
+                await AddProductAsync(Mobile, lorem, "MacBook Pro 16\" 1TB", 12000000M, new string[] { "MacBookPro1", "MacBookPro2", "MacBookPro3", "MacBookPro4" }, user);
+                await AddProductAsync(Laptop, lorem, "Sudadera Mujer", 95000M, new string[] { "Sudadera1", "Sudadera2", "Sudadera3", "Sudadera4", "Sudadera5" }, user);
                 await _context.SaveChangesAsync();
-
             }
         }
 
@@ -83,19 +63,20 @@ namespace Sale.web.Data
             {
                 Category = category,
                 Description = description,
+                IsActive = true,
                 Name = name,
                 Price = price,
-               ProductImages = new List<ProductImage>(),
-              Qualifications = GetRandomQualifications(description, user),
-              IsActive=true,
-              IsStarred=false,
+               // ProductImages = new List<ProductImage>(),
+                Qualifications = GetRandomQualifications(description, user)
             };
-            //foreach (var image in images)
+
+            //foreach (string image in images)
             //{
             //    string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot\\images", $"{image}.png");
             //    Guid imageId = await _blobHelper.UploadBlobAsync(path, "products");
             //    product.ProductImages.Add(new ProductImage { ImageId = imageId });
             //}
+
             _context.Products.Add(product);
         }
 
@@ -106,15 +87,17 @@ namespace Sale.web.Data
             {
                 qualifications.Add(new Qualification
                 {
-                    Date=DateTime.UtcNow,
-                    Remarks=description,
-                    Score=_random.Next(1,5),
-                    User=user,
-
+                    Date = DateTime.UtcNow,
+                    Remarks = description,
+                    Score = _random.Next(1, 5),
+                    User = user
                 });
             }
+
             return qualifications;
         }
+
+
 
         private async Task CheckCategoriesAsync()
         {

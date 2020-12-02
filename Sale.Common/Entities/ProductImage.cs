@@ -10,13 +10,13 @@ namespace Sale.Common.Entities
         public int Id { get; set; }
 
         [Display(Name = "Image")]
-        public Guid ImageId { get; set; }
+        public string ImageId { get; set; }
 
         //TODO: Pending to put the correct paths
         [Display(Name = "Image")]
-        public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://salewebahmed.azurewebsites.net/images/noimage.png"
-            : $"https://onsaleahmed.blob.core.windows.net/products/{ImageId}";
+        public string ImageFullPath => string.IsNullOrEmpty(ImageId)
+            ? $"http://onsaleahmed.somee.com/images/noimage.png"
+            : $"http://onsaleahmed.somee.com/{ImageId.Substring(1)}";
 
     }
 }

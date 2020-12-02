@@ -20,7 +20,7 @@ namespace Sale.web.Helpers
             _context = context;
             _combosHelper = combosHelper;
         }
-        public Category ToCategory(CategoryViewModel model, Guid ImageId, bool iSNew)
+        public Category ToCategory(CategoryViewModel model, string ImageId, bool iSNew)
         {
             return new Category
             {

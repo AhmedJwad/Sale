@@ -7,7 +7,7 @@
     <!-- Application resource dictionary -->
         <ResourceDictionary>       
            <!-- Parameters -->
-            <x:String x:Key="UrlAPI">https://salewebahmed.azurewebsites.net</x:String>
+            <x:String x:Key="UrlAPI">http://onsaleahmed.somee.com/</x:String>
             <!-- Colors -->
             <Color x:Key="ColorBackground">#D9D9D9</Color>
             <Color x:Key="ColorPrimary">#3E518C</Color>

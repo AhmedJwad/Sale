@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Sale.Common.Entities;
+using Sale.Common.Enums;
 using Sale.Common.Request;
+using Sale.Common.Responses;
+using Sale.web.Data;
 using Sale.web.Data.Entities;
 using Sale.web.Helpers;
 using Sale.web.Models;
@@ -23,15 +28,91 @@ namespace Sale.web.Controllers.Api
     public class AccountController : ControllerBase
     {
         private readonly IUserHelper _userHelper;
-        private readonly IConfiguration _configuration;    
+        private readonly IConfiguration _configuration;
+        private readonly IMailHelper _mailHelper;
+        private readonly DataContext _context;
+        private readonly IImageHelper _imageHelper;
 
-        public AccountController(IUserHelper userHelper, IConfiguration configuration  )
+        public AccountController(IUserHelper userHelper, IConfiguration configuration,
+            IMailHelper mailHelper, DataContext context, IImageHelper imageHelper )
         {
-            _userHelper = userHelper;
-            _configuration = configuration;
+           _userHelper = userHelper;
+           _configuration = configuration;
+           _mailHelper = mailHelper;
+           _context = context;
+            _imageHelper = imageHelper;
+        }
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> PostUser([FromBody] UserRequest request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                { 
+                    IsSuccess=false,
+                    Message="Bad request",
+                    Result=ModelState,                
+                });
+            }
+            User user = await _userHelper.GetUserAsync(request.Email);
+            if(user!=null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess=false,
+                    Message= "Error003",
+                });
+            }
+            City city = await _context.Cities.FindAsync(request.CityId);
+            if(city==null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess=false,
+                    Message="Error004",
+                });
+            }
+            string imageId = string.Empty;
+            if(request.ImageArray!=null)
+            {
+                imageId =  _imageHelper.UploadImage(request.ImageArray, "users");
+            }
+            user = new User
+            {
+                FirstName=request.FirstName,
+                LastName=request.LastName,
+                Address=request.Address,
+                City=city,
+                ImageId=imageId,
+                Email=request.Email,
+                UserName=request.Email,
+                PhoneNumber=request.Phone,
+               UserType=UserType.User,
+            };
+
+            IdentityResult result = await _userHelper.AddUserAsync(user, request.Password);
+            if(result!=IdentityResult.Success)
+            {
+                return BadRequest(result.Errors.FirstOrDefault().Description);
+            }
+            User userNew = await _userHelper.GetUserAsync(request.Email);
+            await _userHelper.AddUserToRoleAsync(userNew, user.UserType.ToString());
+
+            string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+            string tokenLink = Url.Action("ConfirmEmail", "Account", new
+            {
+                userid = user.Id,
+                token = myToken
+            }, protocol: HttpContext.Request.Scheme);
+
+            _mailHelper.SendMail(request.Email, "Email Confirmation", $"<h1>Email Confirmation</h1>" +
+                $"To confirm your email please click on the link<p><a href = \"{tokenLink}\">Confirm Email</a></p>");
+
+            return Ok(new Response { IsSuccess = true });
         }
 
-       [HttpPost]
+        [HttpPost]
        [Route("CreateToken")]
        public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model )
         {
@@ -103,6 +184,37 @@ namespace Sale.web.Controllers.Api
                 return NotFound("Error001");
             }
             return Ok(user);
+        }
+        [HttpPost]
+        [Route("RecoverPasswordApp")]
+        public async Task<IActionResult> RecoverPasswordApp([FromBody] emailrequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Bad request"
+                });
+            }
+
+            User user = await _userHelper.GetUserAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Error001"
+                });
+            }
+
+            string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+            string link = Url.Action("ResetPassword", "Account", new { token = myToken }, protocol: HttpContext.Request.Scheme);
+            _mailHelper.SendMail(request.Email, "Password Recover", $"<h1>Password Recover</h1>" +
+                $"Click on the following link to change your password:<p>" +
+                $"<a href = \"{link}\">Change Password</a></p>");
+
+            return Ok(new Response { IsSuccess = true });
         }
 
     }

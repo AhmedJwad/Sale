@@ -21,14 +21,16 @@ namespace Sale.web.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IConverterHelper _converterHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly IImageHelper _imageHelper;
 
         public ProductsController(DataContext context, ICombosHelper combosHelper,
-            IConverterHelper converterHelper, IBlobHelper blobHelper)
+            IConverterHelper converterHelper, IBlobHelper blobHelper, IImageHelper imageHelper)
         {
            _context = context;
            _combosHelper = combosHelper;
             _converterHelper = converterHelper;
            _blobHelper = blobHelper;
+            _imageHelper = imageHelper;
         }
         public async Task<IActionResult> Index()
         {
@@ -59,7 +61,8 @@ namespace Sale.web.Controllers
                     Product product = await _converterHelper.ToProductAsync(model, true);
                     if(model.ImageFile!=null)
                     {
-                        Guid ImageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                        //Guid ImageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                        string ImageId = await _imageHelper.UploadImageAsync(model.ImageFile, "product");
                         product.ProductImages = new List<ProductImage>
                         {
                             new ProductImage{ImageId=ImageId}
@@ -116,7 +119,8 @@ namespace Sale.web.Controllers
                     Product product = await _converterHelper.ToProductAsync(model, false);
                    if(model.ImageFile!=null)
                     {
-                        Guid imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                        // Guid imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                        string imageId = await _imageHelper.UploadImageAsync(model.ImageFile, "product");
                         if (product.ProductImages == null)
                         {
                             product.ProductImages = new List<ProductImage>();
@@ -223,7 +227,8 @@ namespace Sale.web.Controllers
                 }
                 try
                 {
-                    Guid imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                    //Guid imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "products");
+                    string imageId = await _imageHelper.UploadImageAsync(model.ImageFile, "product");
                     if (product.ProductImages == null)
                     {
                         product.ProductImages = new List<ProductImage>();

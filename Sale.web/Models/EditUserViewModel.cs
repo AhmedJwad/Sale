@@ -30,12 +30,12 @@ namespace Sale.web.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Image")]
-        public Guid ImageId { get; set; }
+        public string ImageId { get; set; }
 
         [Display(Name = "Image")]
-        public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://salewebahmed.azurewebsites.net/images/noimage.png"
-            : $"https://onsaleahmed.blob.core.windows.net/users/{ImageId}";
+        public string ImageFullPath => string.IsNullOrEmpty(ImageId)
+            ? $"http://onsaleahmed.somee.com/images/noimage.png"
+            : $"http://onsaleahmed.somee.com/{ImageId.Substring(1)}";
 
         [Display(Name = "Image")]
         public IFormFile ImageFile { get; set; }

@@ -15,10 +15,10 @@ namespace Sale.Common.Responses
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-        public Guid ImageId { get; set; }
-        public string ImageFullPath => ImageId == Guid.Empty
-             ? $"https://salewebahmed.azurewebsites.net/images/noimage.png"
-             : $"https://onsaleahmed.blob.core.windows.net/users/{ImageId}";
+        public string ImageId { get; set; }
+        public string ImageFullPath => string.IsNullOrEmpty(ImageId)
+               ? $"http://onsaleahmed.somee.com/images/noimage.png"
+              : $"http://onsaleahmed.somee.com/{ImageId.Substring(1)}";
         public UserType UserType { get; set; }
         public City City { get; set; }
         public string FullName => $"{FirstName} {LastName}";

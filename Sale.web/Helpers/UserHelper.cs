@@ -31,7 +31,7 @@ namespace Sale.web.Helpers
             return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType)
+        public async Task<User> AddUserAsync(AddUserViewModel model, string imageId, UserType userType)
         {
             User user = new User
             {

@@ -12,6 +12,7 @@ namespace Sale.Common.Helpers
         private const string _isLogin = "isLogin";
         private static readonly string _stringDefault = string.Empty;
         private static readonly bool _boolDefault = false;
+        private const string _product = "product";
 
         private static ISettings AppSettings => CrossSettings.Current;
 
@@ -26,6 +27,12 @@ namespace Sale.Common.Helpers
             get => AppSettings.GetValueOrDefault(_isLogin, _boolDefault);
             set => AppSettings.AddOrUpdateValue(_isLogin, value);
         }
+        public static string Product
+        {
+            get => AppSettings.GetValueOrDefault(_product, _stringDefault);
+            set => AppSettings.AddOrUpdateValue(_product, value);
+        }
+
 
     }
 }

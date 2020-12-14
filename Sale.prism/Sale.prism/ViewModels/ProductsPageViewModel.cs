@@ -62,6 +62,7 @@ namespace Sale.prism.ViewModels
                         Name=p.Name,
                         ProductImages=p.ProductImages,
                         Id=p.Id,
+                        Qualifications=p.Qualifications,
                     }).ToList());              
             }
            else
@@ -77,6 +78,7 @@ namespace Sale.prism.ViewModels
                         Name = p.Name,
                         ProductImages = p.ProductImages,
                         Id = p.Id,
+                        Qualifications=p.Qualifications,
                     }).Where(p=>p.Name.ToLower().Contains(Search.ToLower())).ToList());
             }
         }

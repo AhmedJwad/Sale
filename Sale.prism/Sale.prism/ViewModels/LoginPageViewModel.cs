@@ -22,6 +22,7 @@ namespace Sale.prism.ViewModels
         private string _password;
         private bool _isRunning;
         private bool _isEnabled;
+        private string _pageReturn;
         private DelegateCommand _loginCommand;
         private DelegateCommand _registerCommand;
         private DelegateCommand _forgotPasswordCommand;
@@ -32,7 +33,14 @@ namespace Sale.prism.ViewModels
             Title = Languages.Login;
             IsEnabled = true;
         }
-
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters.ContainsKey("pageReturn"))
+            {
+                _pageReturn = parameters.GetValue<string>("pageReturn");
+            }
+        }
         public string Email
         {
             get; set;
@@ -55,8 +63,8 @@ namespace Sale.prism.ViewModels
             set => SetProperty(ref _isEnabled, value);
         }
         public DelegateCommand LoginCommand => _loginCommand ??
-            (_loginCommand = new DelegateCommand(LoginAsync));
-
+            (_loginCommand = new DelegateCommand(LoginAsync));       
+    
         private async void LoginAsync()
         {
             if (string.IsNullOrEmpty(Email))
@@ -90,7 +98,7 @@ namespace Sale.prism.ViewModels
             if(!response.IsSuccess)
             {
                 IsRunning = false;
-                IsEnabled = true;
+                IsEnabled = true;               
                 await App.Current.MainPage.DisplayAlert(Languages.Error,
                    Languages.LoginError, Languages.Accept);
                 Password = string.Empty;
@@ -99,8 +107,16 @@ namespace Sale.prism.ViewModels
             TokenResponse token = (TokenResponse)response.Result;
             Settings.Token = JsonConvert.SerializeObject(token);
             Settings.IsLogin = true;
-             await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(ProductsPage)}");
             Password = string.Empty;
+            //await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(ProductsPage)}");
+            if (string.IsNullOrEmpty(_pageReturn))
+            {
+                await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(ProductsPage)}");
+            }
+            else
+            {
+                await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{_pageReturn}");
+            }           
         }
 
         public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand =
@@ -117,5 +133,8 @@ namespace Sale.prism.ViewModels
         {
             throw new NotImplementedException();
         }
+
+       
+     
     }
 }

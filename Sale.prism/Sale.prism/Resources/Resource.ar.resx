@@ -198,4 +198,34 @@
   <data name="LoginFirstMessage" xml:space="preserve">
     <value>يجب تسجيل الدخول لإكمال هذا الإجراء. يمكنك تسجيل الدخول أو التسجيل كمستخدم جديد  </value>
   </data>
+  <data name="Qualification" xml:space="preserve">
+    <value>قييم المنتج</value>
+  </data>
+  <data name="Qualifications" xml:space="preserve">
+    <value>التقييمات</value>
+  </data>
+  <data name="QualificationNumber" xml:space="preserve">
+    <value>عدد التقييمات</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>تفاصيل</value>
+  </data>
+  <data name="RemarksPlaceHolder" xml:space="preserve">
+    <value>أكتب تعليق</value>
+  </data>
+  <data name="QualificationError" xml:space="preserve">
+    <value>يجب عليك اختيار التقييم.!</value>
+  </data>
+  <data name="NewQualification" xml:space="preserve">
+    <value>التقييمات</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
 </root>

@@ -19,7 +19,7 @@ namespace Sale.prism
 
         protected override async void OnInitialized()
         {
-            SyncfusionLicenseProvider.RegisterLicense("MzQ3MjAzQDMxMzgyZTMzMmUzMGNFSnhwRTFkTmV1V0FhcDB0d28xank5V2xEOWltVG1pZmZwUTNtdnVhb2s9");
+            SyncfusionLicenseProvider.RegisterLicense("MzYyNzg0QDMxMzgyZTMzMmUzMEVuU0hHcTYweE1NL1o3Q21neC9aSGZhcStZaEE3ZE1GeWRjZkFuWHMzVGM9");
             InitializeComponent();
             await NavigationService.NavigateAsync($"{nameof(OnSaleMasterDetailPage)}" +
                 $"/NavigationPage/{nameof(ProductsPage)}");
@@ -38,6 +38,10 @@ namespace Sale.prism
             containerRegistry.RegisterForNavigation<ShowCarPage, ShowCarPageViewModel>();
             containerRegistry.RegisterForNavigation<ShowHistoryPage, ShowHistoryPageViewModel>();
             containerRegistry.RegisterForNavigation<ModifyUserPage, ModifyUserPageViewModel>();
+            containerRegistry.RegisterForNavigation<QualificationsPage, QualificationsPageViewModel>();
+            containerRegistry.RegisterForNavigation<QualificationDetailPage, QualificationDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProductTabbedPage, ProductTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddQualificationPage, AddQualificationPageViewModel>();
         }
     }
 }

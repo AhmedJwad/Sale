@@ -1,5 +1,7 @@
-﻿using Prism.Commands;
+﻿using Newtonsoft.Json;
+using Prism.Commands;
 using Prism.Navigation;
+using Sale.Common.Helpers;
 using Sale.Common.Responses;
 using Sale.prism.Views;
 
@@ -24,7 +26,8 @@ namespace Sale.prism.ItemViewModels
             {
                 { "product" , this}
             };
-            await _navigationService.NavigateAsync(nameof(ProductDetailPage), parameters);
+            Settings.Product = JsonConvert.SerializeObject(this);
+            await _navigationService.NavigateAsync(nameof(ProductTabbedPage), parameters);
         }
     }
 }

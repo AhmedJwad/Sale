@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:i18n="clr-namespace:Sale.prism.Helpers"
+             x:Class="Sale.prism.Views.AddQualificationPage"
+             FlowDirection="{x:Static Device.FlowDirection}" 
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     Padding="5">
+            <ScrollView>
+                <StackLayout>
+                    <rating:SfRating HorizontalOptions="Center"
+                                     Precision="Half"
+                                     Value="{Binding Qualification}"/>
+                    <Entry  Text="{Binding Remarks}"
+                            HeightRequest="100"
+                            Placeholder="{i18n:Translate RemarksPlaceHolder}"/>
+                </StackLayout>
+            </ScrollView>
+            <ActivityIndicator IsRunning="{Binding IsRunning}"
+                                   Color="Red"/>
+            <Button Command="{Binding SaveCommand}"
+                    IsEnabled="{Binding IsEnabled}"
+                         Text="{i18n:Translate Save}"
+                    VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentPage>

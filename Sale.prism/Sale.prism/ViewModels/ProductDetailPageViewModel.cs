@@ -21,7 +21,7 @@ namespace Sale.prism.ViewModels
         public ProductDetailPageViewModel(INavigationService navigationService):base(navigationService)
         {
             _navigationService = navigationService;
-            Title = Languages.Product;
+            Title = Languages.Details;
         }
 
         public ObservableCollection<ProductImage> Images

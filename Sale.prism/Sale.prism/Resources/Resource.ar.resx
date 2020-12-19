@@ -228,4 +228,97 @@
   <data name="Save" xml:space="preserve">
     <value>حفظ</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الأول</value>
+  </data>
+  <data name="FirstNamePlaceHolder" xml:space="preserve">
+    <value>إدخال الاسم الأول</value>
+  </data>
+  <data name="FirstNameError" xml:space="preserve">
+    <value>يجب ادخال الاسم الاول</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>اسم العائلة</value>
+  </data>
+  <data name="LastNamePlaceHolder" xml:space="preserve">
+    <value>إدخال اسم العائلة</value>
+  </data>
+  <data name="LastNameError" xml:space="preserve">
+    <value>يجب ادخال أسم العائلة</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="AddressPlaceHolder" xml:space="preserve">
+    <value>الرجاء إدخال العنوان.</value>
+  </data>
+  <data name="AddressError" xml:space="preserve">
+    <value>يجب إدخال عنوان.</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>الهاتف</value>
+  </data>
+  <data name="PhoneError" xml:space="preserve">
+    <value>أدخل رقم الهاتف الخاص بك</value>
+  </data>
+  <data name="PhonePlaceHolder" xml:space="preserve">
+    <value>لتسجيل حساب Multi-Factor Authentication عبر الإنترنت، يجب أن تدخل رقم هاتف في واحدة من &amp;lt;a href='/reports/global_rates_report?public=1' target='blank'&amp;gt;الـ 36 دولة التي تتمتع بحسابات مجانية&amp;lt;/a&amp;gt;. يعمل Mutli-Factor Authentication في جميع أنحاء العالم، لكن يكون ذلك مصحوبًا بفرض رسوم إضافية على الخدمات العالمية. لمزيد من المعلومات حول الخدمات العالمية أو لتسجيل الاشتراك، يرجى الاتصال بمبيعات Multi-Factor Authentication.</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينة</value>
+  </data>
+  <data name="CityError" xml:space="preserve">
+    <value>يجب اختيار مدينتك</value>
+  </data>
+  <data name="CityPlaceHolder" xml:space="preserve">
+    <value>حدد مدينتك</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>المحافظة</value>
+  </data>
+  <data name="DepartmentError" xml:space="preserve">
+    <value>يجب اختيار المحافظة</value>
+  </data>
+  <data name="DepartmentPlaceHolder" xml:space="preserve">
+    <value>اختار مدينتك</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>البلد</value>
+  </data>
+  <data name="CountryError" xml:space="preserve">
+    <value>يجب تحديد بلد أو منطقة.</value>
+  </data>
+  <data name="CountryPlaceHolder" xml:space="preserve">
+    <value>تحديد بلدك</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>الحساب/تعيين كلمة المرور/تأكيد كلمة المرور</value>
+  </data>
+  <data name="PasswordConfirmError1" xml:space="preserve">
+    <value>يجب ادخال كلمة السر</value>
+  </data>
+  <data name="PasswordConfirmError2" xml:space="preserve">
+    <value>كلمة السر وتأكيد كلية السر غير متطابقات</value>
+  </data>
+  <data name="PasswordConfirmPlaceHolder" xml:space="preserve">
+    <value>ادخل تأكييد كلمة السر</value>
+  </data>
+  <data name="Error001" xml:space="preserve">
+    <value>المستخدم غير موجود</value>
+  </data>
+  <data name="Error002" xml:space="preserve">
+    <value>المنتج غير موجود</value>
+  </data>
+  <data name="Error003" xml:space="preserve">
+    <value>المستخدم موجود مسبقاً</value>
+  </data>
+  <data name="Error004" xml:space="preserve">
+    <value>المنطقة غير موجودة</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>موافق</value>
+  </data>
+  <data name="RegisterMessge" xml:space="preserve">
+    <value>تم تسجيل المستخدم بنجاح يرجى فتح الايميل الذي قمت بالتسجيل فيه للضغط على رابط التفعيل</value>
+  </data>
 </root>

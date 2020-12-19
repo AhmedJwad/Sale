@@ -116,14 +116,14 @@ namespace Sale.prism.ViewModels
             else
             {
                 await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{_pageReturn}");
-            }           
+            }
         }
 
         public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand =
             new DelegateCommand(RegisterAsync));
         private async void RegisterAsync()
-        {          
-
+        {
+            await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
 
         public DelegateCommand ForgotPasswordCommand => _forgotPasswordCommand ??

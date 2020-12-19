@@ -70,6 +70,33 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter an address..
+        /// </summary>
+        public static string AddressError {
+            get {
+                return ResourceManager.GetString("AddressError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your address....
+        /// </summary>
+        public static string AddressPlaceHolder {
+            get {
+                return ResourceManager.GetString("AddressPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add to cart.
         /// </summary>
         public static string AddToCart {
@@ -97,11 +124,92 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        public static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to you must select a city...
+        /// </summary>
+        public static string CityError {
+            get {
+                return ResourceManager.GetString("CityError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your city...
+        /// </summary>
+        public static string CityPlaceHolder {
+            get {
+                return ResourceManager.GetString("CityPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select a country.
+        /// </summary>
+        public static string CountryError {
+            get {
+                return ResourceManager.GetString("CountryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your country...
+        /// </summary>
+        public static string CountryPlaceHolder {
+            get {
+                return ResourceManager.GetString("CountryPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        public static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DepartmentError.
+        /// </summary>
+        public static string DepartmentError {
+            get {
+                return ResourceManager.GetString("DepartmentError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your department....
+        /// </summary>
+        public static string DepartmentPlaceHolder {
+            get {
+                return ResourceManager.GetString("DepartmentPlaceHolder", resourceCulture);
             }
         }
         
@@ -160,6 +268,69 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User no found.
+        /// </summary>
+        public static string Error001 {
+            get {
+                return ResourceManager.GetString("Error001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product no found..
+        /// </summary>
+        public static string Error002 {
+            get {
+                return ResourceManager.GetString("Error002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user with that email is already registered.
+        /// </summary>
+        public static string Error003 {
+            get {
+                return ResourceManager.GetString("Error003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City no found..
+        /// </summary>
+        public static string Error004 {
+            get {
+                return ResourceManager.GetString("Error004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a first name..
+        /// </summary>
+        public static string FirstNameError {
+            get {
+                return ResourceManager.GetString("FirstNameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your first name....
+        /// </summary>
+        public static string FirstNamePlaceHolder {
+            get {
+                return ResourceManager.GetString("FirstNamePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot your password?.
         /// </summary>
         public static string ForgotPassword {
@@ -174,6 +345,33 @@ namespace Sale.prism.Resources {
         public static string IsStarred {
             get {
                 return ResourceManager.GetString("IsStarred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a last name..
+        /// </summary>
+        public static string LastNameError {
+            get {
+                return ResourceManager.GetString("LastNameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your last name....
+        /// </summary>
+        public static string LastNamePlaceHolder {
+            get {
+                return ResourceManager.GetString("LastNamePlaceHolder", resourceCulture);
             }
         }
         
@@ -241,11 +439,56 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password confirm.
+        /// </summary>
+        public static string PasswordConfirm {
+            get {
+                return ResourceManager.GetString("PasswordConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a password confirm..
+        /// </summary>
+        public static string PasswordConfirmError1 {
+            get {
+                return ResourceManager.GetString("PasswordConfirmError1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password and confirm does not match.
+        /// </summary>
+        public static string PasswordConfirmError2 {
+            get {
+                return ResourceManager.GetString("PasswordConfirmError2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the password confirm...
+        /// </summary>
+        public static string PasswordConfirmPlaceHolder {
+            get {
+                return ResourceManager.GetString("PasswordConfirmPlaceHolder", resourceCulture);
             }
         }
         
@@ -264,6 +507,33 @@ namespace Sale.prism.Resources {
         public static string PasswordPlaceHolder {
             get {
                 return ResourceManager.GetString("PasswordPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your phone....
+        /// </summary>
+        public static string PhoneError {
+            get {
+                return ResourceManager.GetString("PhoneError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a phone..
+        /// </summary>
+        public static string PhonePlaceHolder {
+            get {
+                return ResourceManager.GetString("PhonePlaceHolder", resourceCulture);
             }
         }
         
@@ -336,6 +606,15 @@ namespace Sale.prism.Resources {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your user has been registered ok, an email was sent to confirm the user account..
+        /// </summary>
+        public static string RegisterMessge {
+            get {
+                return ResourceManager.GetString("RegisterMessge", resourceCulture);
             }
         }
         

@@ -30,7 +30,7 @@ namespace Sale.prism.ItemViewModels
                 Settings.IsLogin = false;
                 Settings.Token = null;
             }
-            if(!IsLoginRequired && !Settings.IsLogin)
+            if(IsLoginRequired && !Settings.IsLogin)
             {
                 await App.Current.MainPage.DisplayAlert(Languages.Error,
                     Languages.LoginFirstMessage, Languages.Accept);

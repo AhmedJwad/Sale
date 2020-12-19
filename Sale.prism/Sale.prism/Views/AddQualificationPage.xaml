@@ -12,7 +12,8 @@
              xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
-    <AbsoluteLayout>
+    <AbsoluteLayout>   
+        
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                      AbsoluteLayout.LayoutFlags="All"
                      Padding="5">

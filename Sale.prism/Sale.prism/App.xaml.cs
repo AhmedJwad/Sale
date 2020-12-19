@@ -7,6 +7,7 @@ using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
 using Sale.Common.Services;
 using Syncfusion.Licensing;
+using Sale.prism.Helpers;
 
 namespace Sale.prism
 {
@@ -42,6 +43,8 @@ namespace Sale.prism
             containerRegistry.RegisterForNavigation<QualificationDetailPage, QualificationDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<ProductTabbedPage, ProductTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<AddQualificationPage, AddQualificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage,RegisterPageViewModel>();
+            containerRegistry.Register<IRegexHelper, RegexHelper>();
         }
     }
 }

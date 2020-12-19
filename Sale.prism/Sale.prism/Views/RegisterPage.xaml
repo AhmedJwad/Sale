@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:i18n="clr-namespace:Sale.prism.Helpers"
+             x:Class="Sale.prism.Views.RegisterPage"
+             FlowDirection="{x:Static Device.FlowDirection}" 
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     Padding="8">
+            <ScrollView>
+                <StackLayout Spacing="0">
+                    <ffimageloading:CachedImage Aspect="AspectFit"
+                                                Source="{Binding Image}" 
+                                                CacheDuration= "50"
+                                                HeightRequest="150"
+                                                Margin="5"
+                                                RetryCount= "3"
+                                                RetryDelay= "600">
+                        <ffimageloading:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation />
+                        </ffimageloading:CachedImage.Transformations>
+                        <ffimageloading:CachedImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
+                        </ffimageloading:CachedImage.GestureRecognizers>
+                    </ffimageloading:CachedImage>
+                    <ActivityIndicator IsRunning="{Binding IsRunning}"
+                                       Color="Navy"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{i18n:Translate  Email}"
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Column="1"
+                               Grid.Row="0"
+                               Placeholder="{i18n:Translate EmailPlaceHolder}"
+                               Text="{Binding User.Email}"/>
+                        <Label Grid.Row="1"
+                               Grid.Column="0"
+                               Text="{i18n:Translate FirstName}}"
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Row="1"
+                               Grid.Column="1"
+                               Placeholder="{i18n:Translate FirstNamePlaceHolder}"
+                               Text="{Binding User.FirstName}"/>
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Text="{i18n:Translate  LastName}"
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Row="2"
+                               Grid.Column="1"
+                               Placeholder="{i18n:Translate LastNamePlaceHolder}"
+                               Text="{Binding User.LastName}"/>
+                        <Label Grid.Row="3"
+                               Grid.Column="0"
+                               Text="{i18n:Translate Country}"
+                               VerticalOptions="Center"/>
+                        <Picker Grid.Row="3"
+                              Grid.Column="1"
+                              ItemDisplayBinding="{Binding Name}"
+                              ItemsSource="{Binding  Countries}"
+                              SelectedItem="{Binding Country}"
+                              Title="{i18n:Translate CountryPlaceHolder}"/>
+                        <Label Grid.Row="4"
+                               Grid.Column="0"
+                               Text="{i18n:Translate Department}"
+                               VerticalOptions="Center"/>
+                        <Picker Grid.Row="4"
+                                Grid.Column="1"
+                                ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding Departments}"
+                                SelectedItem="{Binding Department}"
+                                Title="{i18n:Translate DepartmentPlaceHolder }"/>
+                        <Label Grid.Row="5"
+                               Grid.Column="0"
+                               Text="{i18n:Translate City}"
+                               VerticalOptions="Center"/>
+                        <Picker Grid.Row="5"
+                                Grid.Column="1"
+                                ItemDisplayBinding="{Binding Name}"
+                                ItemsSource="{Binding  Cities}"
+                                SelectedItem="{Binding City}"
+                                Title="{i18n:Translate CityPlaceHolder}"/>
+                        <Label Grid.Row="6"
+                               Grid.Column="0"
+                               Text="{i18n:Translate Address}"
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Row="6"
+                               Grid.Column="1"
+                               Placeholder="{i18n:Translate AddressPlaceHolder}"
+                               Text="{Binding User.Address}"/>
+                        <Label Grid.Row="7"
+                               Grid.Column="0"
+                               Text="{i18n:Translate Phone}"                             
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Row="7"
+                               Grid.Column="1"
+                               Placeholder="{i18n:Translate PhonePlaceHolder}"
+                               Keyboard="Telephone"
+                               Text="{Binding User.Phone}"/>
+                        <Label Grid.Row="8"
+                               Grid.Column="0"
+                               Text="{i18n:Translate Password}"
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Row="8"
+                               Grid.Column="1"
+                               IsPassword="True"
+                               Placeholder="{i18n:Translate PasswordPlaceHolder}"
+                               Text="{Binding User.Password}"/>
+                        <Label Grid.Row="9"
+                               Grid.Column="0"
+                               Text="{i18n:Translate  PasswordConfirm}"
+                               VerticalOptions="Center"/>
+                        <Entry Grid.Row="9"
+                               Grid.Column="1"
+                               Placeholder="{i18n:Translate PasswordConfirmPlaceHolder}"
+                               IsPassword="True"
+                               Text="{Binding User.PasswordConfirm}"/>
+
+                    </Grid>
+                    <ActivityIndicator IsRunning="{Binding IsRunning}" Color="Red"/>
+                </StackLayout>
+            </ScrollView>
+            <Button Command="{Binding RegisterCommand}"
+                    IsEnabled="{Binding IsEnabled}"
+                    Text="{i18n:Translate Register}"
+                    VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentPage>

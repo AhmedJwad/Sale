@@ -23,6 +23,7 @@ namespace Sale.Common.Request
         [Required]
         public int CityId { get; set; }
         public byte[] ImageArray { get; set; }
+        public string PasswordConfirm { get; set; }
 
     }
 }

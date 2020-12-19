@@ -106,6 +106,15 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         public static string Category {
@@ -340,6 +349,24 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Camera.
+        /// </summary>
+        public static string FromCamera {
+            get {
+                return ResourceManager.GetString("FromCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Gallery.
+        /// </summary>
+        public static string FromGallery {
+            get {
+                return ResourceManager.GetString("FromGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Starred.
         /// </summary>
         public static string IsStarred {
@@ -435,6 +462,24 @@ namespace Sale.prism.Resources {
         public static string NewQualification {
             get {
                 return ResourceManager.GetString("NewQualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The device does not support access to the camera..
+        /// </summary>
+        public static string NoCameraSupported {
+            get {
+                return ResourceManager.GetString("NoCameraSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The device does not support access to the gallery..
+        /// </summary>
+        public static string NoGallerySupported {
+            get {
+                return ResourceManager.GetString("NoGallerySupported", resourceCulture);
             }
         }
         
@@ -538,6 +583,15 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Where do you want to take the picture?.
+        /// </summary>
+        public static string PictureSource {
+            get {
+                return ResourceManager.GetString("PictureSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {
@@ -597,6 +651,24 @@ namespace Sale.prism.Resources {
         public static string Qualifications {
             get {
                 return ResourceManager.GetString("Qualifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recover Password.
+        /// </summary>
+        public static string RecoverPassword {
+            get {
+                return ResourceManager.GetString("RecoverPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An email was sent to change your password.
+        /// </summary>
+        public static string RecoverPasswordMessage {
+            get {
+                return ResourceManager.GetString("RecoverPasswordMessage", resourceCulture);
             }
         }
         

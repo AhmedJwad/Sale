@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Plugin.CurrentActivity;
+using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfRotator.XForms.Droid;
@@ -19,6 +21,7 @@ namespace Sale.prism.Droid
             base.OnCreate(savedInstanceState);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             new SfRotatorRenderer();
             LoadApplication(new App(new AndroidInitializer()));
@@ -27,7 +30,7 @@ namespace Sale.prism.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

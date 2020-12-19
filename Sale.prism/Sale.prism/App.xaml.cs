@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Sale.Common.Services;
 using Syncfusion.Licensing;
 using Sale.prism.Helpers;
+using Sale.Common.Helpers;
 
 namespace Sale.prism
 {
@@ -43,8 +44,10 @@ namespace Sale.prism
             containerRegistry.RegisterForNavigation<QualificationDetailPage, QualificationDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<ProductTabbedPage, ProductTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<AddQualificationPage, AddQualificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<RecoverPasswordPage, RecoverPasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPage,RegisterPageViewModel>();
             containerRegistry.Register<IRegexHelper, RegexHelper>();
+            containerRegistry.Register<IFilesHelper, FilesHelper>();
         }
     }
 }

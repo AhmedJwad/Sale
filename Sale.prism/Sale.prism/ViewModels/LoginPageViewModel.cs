@@ -62,6 +62,7 @@ namespace Sale.prism.ViewModels
             get => _isEnabled;
             set => SetProperty(ref _isEnabled, value);
         }
+      
         public DelegateCommand LoginCommand => _loginCommand ??
             (_loginCommand = new DelegateCommand(LoginAsync));       
     
@@ -129,9 +130,14 @@ namespace Sale.prism.ViewModels
         public DelegateCommand ForgotPasswordCommand => _forgotPasswordCommand ??
             (_forgotPasswordCommand = new DelegateCommand(ForgotPasswordAsync));
 
-        private void ForgotPasswordAsync()
+        private async void ForgotPasswordAsync()
         {
-            throw new NotImplementedException();
+            var parameters = new NavigationParameters
+            {
+                { "emial", Email }
+            };
+
+            await _navigationService.NavigateAsync(nameof(RecoverPasswordPage), parameters);
         }
 
        

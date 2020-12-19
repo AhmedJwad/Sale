@@ -60,7 +60,7 @@
                                Text="{Binding User.Email}"/>
                         <Label Grid.Row="1"
                                Grid.Column="0"
-                               Text="{i18n:Translate FirstName}}"
+                               Text="{i18n:Translate FirstName}"
                                VerticalOptions="Center"/>
                         <Entry Grid.Row="1"
                                Grid.Column="1"

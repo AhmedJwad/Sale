@@ -1,6 +1,9 @@
-﻿using Prism.Commands;
+﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Prism.Commands;
 using Prism.Navigation;
 using Sale.Common.Entities;
+using Sale.Common.Helpers;
 using Sale.Common.Request;
 using Sale.Common.Responses;
 using Sale.Common.Services;
@@ -21,6 +24,7 @@ namespace Sale.prism.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IRegexHelper _regexHelper;
         private readonly IApiService _apiService;
+        private readonly IFilesHelper _filesHelper;
         private UserRequest _user;
         private ImageSource _image;
         private City _city;
@@ -31,13 +35,16 @@ namespace Sale.prism.ViewModels
         public ObservableCollection<Country> _countries;
         private bool _isEnabled;
         private bool _isRunning;
+        private MediaFile _file;
         private DelegateCommand _registerCommand;
+        private DelegateCommand _changeImageCommand;
         public RegisterPageViewModel(INavigationService navigationService, IRegexHelper regexHelper
-            , IApiService apiService):base(navigationService)
+            , IApiService apiService, IFilesHelper filesHelper ):base(navigationService)
         {
            _navigationService = navigationService;
           _regexHelper = regexHelper;
            _apiService = apiService;
+           _filesHelper = filesHelper;
             Title = Languages.Register;
             IsEnabled = true;
             Image = App.Current.Resources["UrlNoImage"].ToString();
@@ -159,8 +166,15 @@ namespace Sale.prism.ViewModels
                 await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError, Languages.Accept);
                 return;
             }
+            byte[] imageArray = null;
+            if (_file != null)
+            {
+                imageArray = _filesHelper.ReadFully(_file.GetStream());
+            }
+
             string url = App.Current.Resources["UrlAPI"].ToString();
-            User.CityId = City.Id;
+            User.ImageArray = imageArray;
+            User.CityId = City.Id;            
             Response response = await _apiService.RegisterUserAsync(url, "/api", "/Account/Register",
                 User);
             IsRunning = false;
@@ -259,5 +273,63 @@ namespace Sale.prism.ViewModels
 
             return true;
         }
+        public DelegateCommand ChangeImageCommand => _changeImageCommand ??
+            (_changeImageCommand = new DelegateCommand(ChangeImageAsync));
+
+        private async void ChangeImageAsync()
+        {
+            await CrossMedia.Current.Initialize();
+            string source = await Application.Current.MainPage.DisplayActionSheet(
+      Languages.PictureSource,
+      Languages.Cancel,
+      null,
+      Languages.FromGallery,
+      Languages.FromCamera);
+
+            if (source == Languages.Cancel)
+            {
+                _file = null;
+                return;
+            }
+
+            if (source == Languages.FromCamera)
+            {
+                if (!CrossMedia.Current.IsCameraAvailable)
+                {
+                    await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.NoCameraSupported, Languages.Accept);
+                    return;
+                }
+
+                _file = await CrossMedia.Current.TakePhotoAsync(
+                    new StoreCameraMediaOptions
+                    {
+                        Directory = "Sample",
+                        Name = "test.jpg",
+                        PhotoSize = PhotoSize.Small,
+                    }
+                );
+            }
+            else
+            {
+                if (!CrossMedia.Current.IsPickPhotoSupported)
+                {
+                    await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.NoGallerySupported, Languages.Accept);
+                    return;
+                }
+
+                _file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (_file != null)
+            {
+                Image = ImageSource.FromStream(() =>
+                {
+                    System.IO.Stream stream = _file.GetStream();
+                    return stream;
+                });
+            }
+        }
+
     }
 }
+

@@ -321,4 +321,28 @@
   <data name="RegisterMessge" xml:space="preserve">
     <value>تم تسجيل المستخدم بنجاح يرجى فتح الايميل الذي قمت بالتسجيل فيه للضغط على رابط التفعيل</value>
   </data>
+  <data name="PictureSource" xml:space="preserve">
+    <value>أين تريد التقاط الصورة ؟!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>إلغاء الأمر</value>
+  </data>
+  <data name="FromCamera" xml:space="preserve">
+    <value>من الكاميرا</value>
+  </data>
+  <data name="FromGallery" xml:space="preserve">
+    <value>من المعرض...</value>
+  </data>
+  <data name="NoCameraSupported" xml:space="preserve">
+    <value>الجهاز لا يدعم الوصول للكاميرا.!</value>
+  </data>
+  <data name="NoGallerySupported" xml:space="preserve">
+    <value>الجهاز لا يدعم الوصول الى الاستوديو.!</value>
+  </data>
+  <data name="RecoverPassword" xml:space="preserve">
+    <value>إستعادة كلمة المرور</value>
+  </data>
+  <data name="RecoverPasswordMessage" xml:space="preserve">
+    <value>تم إرسال بريد إلكتروني لتغيير كلمة المرور الخاصة بك!</value>
+  </data>
 </root>

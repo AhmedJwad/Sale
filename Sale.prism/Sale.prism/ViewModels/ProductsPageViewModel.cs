@@ -1,10 +1,14 @@
-﻿using Prism.Commands;
+﻿using Newtonsoft.Json;
+using Prism.Commands;
 using Prism.Navigation;
 using Sale.Common.Entities;
+using Sale.Common.Helpers;
+using Sale.Common.Models;
 using Sale.Common.Responses;
 using Sale.Common.Services;
 using Sale.prism.Helpers;
 using Sale.prism.ItemViewModels;
+using Sale.prism.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,14 +27,17 @@ namespace Sale.prism.ViewModels
         private ObservableCollection<ProductItemViewModel> _products;
         private DelegateCommand _refreshCommand;
         private DelegateCommand _searchCommand;
-
+        private int _cartNumber;
+        private DelegateCommand _showCartCommand;
         public ProductsPageViewModel(INavigationService navigationservice ,IApiService apiService):base(navigationservice)
         {
             _navigationservice = navigationservice;
             _apiService = apiService;
             Title = Languages.Products;
             LoadProductsAsync();
-        }   
+            LoadCartNumber();
+        }
+    
 
         public bool IsRefreshing
         {
@@ -45,6 +52,11 @@ namespace Sale.prism.ViewModels
                 SetProperty(ref _search, value);
                 ShowProducts();
             }
+        }
+        public int CartNumber
+        {
+            get => _cartNumber;
+            set => SetProperty(ref _cartNumber, value);
         }
 
         private void ShowProducts()
@@ -114,5 +126,24 @@ namespace Sale.prism.ViewModels
 
         public DelegateCommand SearchCommand => _searchCommand ??
             (_searchCommand = new DelegateCommand(ShowProducts));
+        private void LoadCartNumber()
+        {
+            List<OrderDetail> orderDetails = JsonConvert.DeserializeObject<List<OrderDetail>>(Settings.OrderDetails);
+            if (orderDetails == null)
+            {
+                orderDetails = new List<OrderDetail>();
+                Settings.OrderDetails = JsonConvert.SerializeObject(orderDetails);
+            }
+
+            CartNumber = orderDetails.Count;
+
+        }
+        public DelegateCommand ShowCartCommand => _showCartCommand ??
+            (_showCartCommand = new DelegateCommand(ShowCartAsync));
+
+        private async void ShowCartAsync()
+        {           
+            await _navigationservice.NavigateAsync(nameof(ShowCarPage));
+        }
     }
 }

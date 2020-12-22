@@ -8,6 +8,7 @@ namespace Sale.Common.Helpers
 {
    public static class Settings
     {
+        private const string _orderDetails = "orderDetails";
         private const string _token = "token";
         private const string _isLogin = "isLogin";
         private static readonly string _stringDefault = string.Empty;
@@ -32,7 +33,11 @@ namespace Sale.Common.Helpers
             get => AppSettings.GetValueOrDefault(_product, _stringDefault);
             set => AppSettings.AddOrUpdateValue(_product, value);
         }
-
+        public static string OrderDetails
+        {
+            get => AppSettings.GetValueOrDefault(_orderDetails, _stringDefault);
+            set => AppSettings.AddOrUpdateValue(_orderDetails, value);
+        }
 
     }
 }

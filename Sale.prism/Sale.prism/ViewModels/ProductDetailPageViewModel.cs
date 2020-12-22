@@ -5,6 +5,7 @@ using Sale.Common.Entities;
 using Sale.Common.Responses;
 using Sale.prism.Helpers;
 using Sale.prism.ItemViewModels;
+using Sale.prism.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ namespace Sale.prism.ViewModels
         private readonly INavigationService _navigationService;
         private ProductResponse _product;
         private ObservableCollection<ProductImage> _images;
+        private DelegateCommand _addToCartBinding;
 
         public ProductDetailPageViewModel(INavigationService navigationService):base(navigationService)
         {
@@ -45,6 +47,16 @@ namespace Sale.prism.ViewModels
                 Images = new ObservableCollection<ProductImage>(product.ProductImages);
             }
         }
+        public DelegateCommand AddToCartBinding => _addToCartBinding ??
+            (_addToCartBinding = new DelegateCommand(AddToCartasync));
 
+        private async void AddToCartasync()
+        {
+           NavigationParameters parameters = new NavigationParameters
+            {
+                { "product", product }
+            };
+            await _navigationService.NavigateAsync(nameof(AddToCartPage), parameters);
+        }
     }
 }

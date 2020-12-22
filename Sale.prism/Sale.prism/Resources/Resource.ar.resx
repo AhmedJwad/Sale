@@ -345,4 +345,61 @@
   <data name="RecoverPasswordMessage" xml:space="preserve">
     <value>تم إرسال بريد إلكتروني لتغيير كلمة المرور الخاصة بك!</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
+  <data name="ChangeUserMessage" xml:space="preserve">
+    <value>تم تحديث المستخدم</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور الجديدة</value>
+  </data>
+  <data name="ConfirmNewPasswordError1" xml:space="preserve">
+    <value>يجب عليك إدخال تأكيد لكلمة المرور الجديدة</value>
+  </data>
+  <data name="ConfirmNewPasswordError2" xml:space="preserve">
+    <value>كلمة المرور والتأكيد غير متطابقين!</value>
+  </data>
+  <data name="ConfirmNewPasswordPlaceHolder" xml:space="preserve">
+    <value>أدخل تأكيد كلمة المرور الجديدة </value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="CurrentPasswordError" xml:space="preserve">
+    <value>يجب إدخال كلمة المرور الجديدة </value>
+  </data>
+  <data name="CurrentPasswordPlaceHolder" xml:space="preserve">
+    <value>أدخل كلمة المرور الحالية الخاصة بك</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>كلمة المرور الجديدة:</value>
+  </data>
+  <data name="NewPasswordError" xml:space="preserve">
+    <value>يجب إدخال كلمة المرور الجديدة</value>
+  </data>
+  <data name="NewPasswordPlaceHolder" xml:space="preserve">
+    <value>إدخال كلمة المرور الجديدة</value>
+  </data>
+  <data name="Error005" xml:space="preserve">
+    <value>كلمة المرور الحالية غير صحيحة</value>
+  </data>
+  <data name="ChangePassworrdMessage" xml:space="preserve">
+    <value>تم تغيير كلمة المرور بنجاح</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="QuantityError" xml:space="preserve">
+    <value>يجب عليك إدخال كمية!</value>
+  </data>
+  <data name="QuantityPlaceHolder" xml:space="preserve">
+    <value>أدخل كمية المنتج ..!</value>
+  </data>
+  <data name="AddToCartMessage" xml:space="preserve">
+    <value>تمت إضافة المنتج إلى سلة التسوق بنجاح!</value>
+  </data>
+  <data name="ProductExistInOrder" xml:space="preserve">
+    <value>المنتج موجود بالفعل في الطلب. يمكنك تعديل الطلب في عرض عربة التسوق</value>
+  </data>
 </root>

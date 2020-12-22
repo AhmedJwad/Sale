@@ -46,6 +46,8 @@ namespace Sale.prism
             containerRegistry.RegisterForNavigation<AddQualificationPage, AddQualificationPageViewModel>();
             containerRegistry.RegisterForNavigation<RecoverPasswordPage, RecoverPasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPage,RegisterPageViewModel>();
+            containerRegistry.RegisterForNavigation<ChangePasswordPage,ChangePasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddToCartPage, AddToCartPageViewModel>();
             containerRegistry.Register<IRegexHelper, RegexHelper>();
             containerRegistry.Register<IFilesHelper, FilesHelper>();
         }

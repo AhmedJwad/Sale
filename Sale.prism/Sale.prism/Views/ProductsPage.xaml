@@ -12,12 +12,15 @@
              FlowDirection="{x:Static Device.FlowDirection}" 
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding CartNumber}" Command="{Binding ShowCartCommand}"/>
+    </ContentPage.ToolbarItems>
     <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                  AbsoluteLayout.LayoutFlags="All" Padding="5">
         <SearchBar Placeholder="{i18n:Translate SearchProduct}"
                    SearchCommand="{Binding SearchCommand }"
-                   Text="{Binding Search}"/>
+                   Text="{Binding Search}"/>    
+
         <RefreshView IsRefreshing="{Binding IsRefreshing}"
                      Command="{Binding RefreshCommand}">
             <CollectionView ItemsSource="{Binding Products}">

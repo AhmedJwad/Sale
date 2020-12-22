@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace Sale.Common.Services
 {
     public class ApiService : IApiService
-    {
+    {       
+
         public async Task<Response> GetListAsync<T>(string urlBase, string servicePrefix, string controller)
         {
             try
@@ -88,6 +89,46 @@ namespace Sale.Common.Services
                 };
             }
 
+        }
+
+        public async Task<Response> ModifyUserAsync(string urlBase, string servicePrefix, string controller, UserRequest userRequest, string token)
+        {
+            try
+            {
+                string request = JsonConvert.SerializeObject(userRequest);
+                StringContent content = new StringContent(request, Encoding.UTF8, "application/json");
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(urlBase)
+                };
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer",
+                    token);
+                string url = $"{servicePrefix}{controller}";
+                HttpResponseMessage response = await client.PutAsync(url, content);
+                string anwer = await response.Content.ReadAsStringAsync();
+                if(!response.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Response>(anwer);
+                }
+                UserResponse user = JsonConvert.DeserializeObject<UserResponse>(anwer);
+                return new Response
+                {
+                    IsSuccess = true,
+                    Result = user,
+                };
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+
+                };
+            }
         }
 
         public async Task<Response> PostQualificationAsync(string urlBase, string servicePrefix, string controller, QualificationRequest qualificationRequest, string token)
@@ -176,6 +217,33 @@ namespace Sale.Common.Services
                 string answer = await response.Content.ReadAsStringAsync();
                 Response obj = JsonConvert.DeserializeObject<Response>(answer);
                 return obj;
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<Response> ChangePasswordAsync(string urlBase, string servicePrefix, string controller,
+            ChangePasswordRequest changePasswordRequest, string token)
+        {
+            try
+            {
+                string reqest = JsonConvert.SerializeObject(changePasswordRequest);
+                StringContent content = new StringContent(reqest, Encoding.UTF8, "application/json");
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(urlBase)
+                };
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                string url = $"{servicePrefix}{controller}";
+                HttpResponseMessage response = await client.PostAsync(url , content);
+                string answer = await response.Content.ReadAsStringAsync();
+                Response obj = JsonConvert.DeserializeObject<Response>(answer);
+                return obj;           
             }
             catch (Exception ex)
             {

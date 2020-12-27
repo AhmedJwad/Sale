@@ -29,11 +29,12 @@ namespace Sale.prism.ViewModels
         private DelegateCommand _searchCommand;
         private int _cartNumber;
         private DelegateCommand _showCartCommand;
+      
         public ProductsPageViewModel(INavigationService navigationservice ,IApiService apiService):base(navigationservice)
         {
             _navigationservice = navigationservice;
             _apiService = apiService;
-            Title = Languages.Products;
+            Title = Languages.Products;          
             LoadProductsAsync();
             LoadCartNumber();
         }
@@ -44,6 +45,7 @@ namespace Sale.prism.ViewModels
             get => _isRefreshing;
             set=> SetProperty(ref _isRefreshing, value);
         }
+      
         public string Search
         {
             get => _search;
@@ -133,10 +135,9 @@ namespace Sale.prism.ViewModels
             {
                 orderDetails = new List<OrderDetail>();
                 Settings.OrderDetails = JsonConvert.SerializeObject(orderDetails);
-            }
-
-            CartNumber = orderDetails.Count;
-
+            }        
+           
+            CartNumber = orderDetails.Count;        
         }
         public DelegateCommand ShowCartCommand => _showCartCommand ??
             (_showCartCommand = new DelegateCommand(ShowCartAsync));

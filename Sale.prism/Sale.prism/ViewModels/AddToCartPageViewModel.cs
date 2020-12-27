@@ -5,6 +5,7 @@ using Sale.Common.Entities;
 using Sale.Common.Helpers;
 using Sale.Common.Models;
 using Sale.Common.Responses;
+using Sale.Common.Services;
 using Sale.prism.Helpers;
 using Sale.prism.Views;
 using System;
@@ -18,16 +19,19 @@ namespace Sale.prism.ViewModels
     public class AddToCartPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
+        private readonly IApiService _iapiservice;
         private bool _isRunning;
         private bool _isEnabled;
         private ObservableCollection<ProductImage> _images;
         private ProductResponse _product;
-        private DelegateCommand _addToCartCommand;
-        public AddToCartPageViewModel(INavigationService navigationService) : base(navigationService)
+        private DelegateCommand _addToCartCommand;      
+      
+        public AddToCartPageViewModel(INavigationService navigationService, IApiService iapiservice) : base(navigationService)
         {
             _navigationService = navigationService;
-            Title = Languages.AddToCart;
-            IsEnabled = true;
+           _iapiservice = iapiservice;
+            Title = Languages.AddToCart;       
+            IsEnabled = true;           
         }
 
         public bool IsRunning
@@ -40,7 +44,7 @@ namespace Sale.prism.ViewModels
             get => _isEnabled;
             set => SetProperty(ref _isEnabled, value);
         }
-
+     
         public ObservableCollection<ProductImage> Images
         {
             get => _images;
@@ -71,7 +75,8 @@ namespace Sale.prism.ViewModels
             if (!isValid)
             {
                 return;
-            }
+            }        
+                       
             List<OrderDetail> orderDetails = JsonConvert.DeserializeObject<List<OrderDetail>>(Settings.OrderDetails);
             if(orderDetails==null)
             {
@@ -86,13 +91,17 @@ namespace Sale.prism.ViewModels
                     return;
                 }
             }
+
             orderDetails.Add(new OrderDetail
             {
-                Product=Product,
-                Quantity=Quantity,
-                Remarks=Remarks,
+                Product = Product,
+                Quantity = Quantity,
+                Remarks = Remarks,
+              
             });
-            Settings.OrderDetails = JsonConvert.SerializeObject(orderDetails);
+           
+            Settings.OrderDetails = JsonConvert.SerializeObject(orderDetails);         
+
             await App.Current.MainPage.DisplayAlert(Languages.Ok, Languages.AddToCartMessage, Languages.Accept);
             await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(ProductsPage)}");
         }

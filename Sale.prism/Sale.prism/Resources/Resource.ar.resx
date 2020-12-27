@@ -402,4 +402,34 @@
   <data name="ProductExistInOrder" xml:space="preserve">
     <value>المنتج موجود بالفعل في الطلب. يمكنك تعديل الطلب في عرض عربة التسوق</value>
   </data>
+  <data name="Value" xml:space="preserve">
+    <value>القيمة</value>
+  </data>
+  <data name="FinishOrder" xml:space="preserve">
+    <value>إنهاء الطلب!</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="ClearAllConfirm" xml:space="preserve">
+    <value>هل أنت متأكد من تنظيف جميع المنتجات بالترتيب ؟!</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>العناصر</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>الإجمالي:</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>&amp;حذف...</value>
+  </data>
+  <data name="DeleteProductInOrderConfirm" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المنتج بالترتيب ؟!</value>
+  </data>
+  <data name="ModifyOrder" xml:space="preserve">
+    <value>تعديل أمر</value>
+  </data>
 </root>

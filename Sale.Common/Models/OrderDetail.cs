@@ -12,6 +12,8 @@ namespace Sale.Common.Models
         public float Quantity { get; set; }
         public string Remarks { get; set; }
         public decimal? Value => (decimal)Quantity * Product?.Price;
+        
+      
 
     }
 }

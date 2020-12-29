@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:i18n="clr-namespace:Sale.prism.Helpers"
+             x:Class="Sale.prism.Views.FinishOrderPage"
+             FlowDirection="{x:Static Device.FlowDirection}" 
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+             BackgroundColor="{StaticResource ColorBackground}"
+             Title="{Binding Title}">
+
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     Padding="5">
+            <ScrollView>
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Text="{i18n:Translate Total}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                        <Label Grid.Column="1"
+                           Grid.Row="0"
+                           Text="{Binding TotalValue, StringFormat='{0:C2}'}"
+                           FontSize="Medium"
+                           HorizontalTextAlignment="End"/>
+                        <Label Grid.Column="0"
+                           Grid.Row="1"
+                           Text="{i18n:Translate Items}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                        <Label Grid.Column="1"
+                           Grid.Row="1"
+                           FontSize="Medium"
+                           HorizontalTextAlignment="End"
+                          Text="{Binding TotalItems, StringFormat='{0:N2}'}" />
+                        <Label Grid.Column="0"
+                           Grid.Row="2"
+                           Text="{i18n:Translate Quantity}"
+                           VerticalOptions="Center"/>
+                        <Label 
+                            Grid.Column="1"
+                            Grid.Row="2"                          
+                           FontSize="Medium"
+                           HorizontalTextAlignment="End"
+                           Text="{Binding TotalQuantity, StringFormat='{0:N2}'}" />
+                    </Grid>
+                    <Label Text="{i18n:Translate PaymentMethod}"/>
+                    <Picker ItemDisplayBinding="{Binding Name}"
+                        ItemsSource="{Binding PaymentMethods}"
+                        SelectedItem="{Binding PaymentMethod}"
+                        Title="{i18n:Translate PaymentMethodPlaceHolder}"/>
+                    <Label Text="{i18n:Translate DeliveryAddress}"/>
+                    <Entry Placeholder="{i18n:Translate DeliveryAddressPlaceHolder}"
+                       HeightRequest="100"
+                       Text="{Binding DeliveryAddress}"/>
+                    <Label Text="{i18n:Translate Remarks}"/>
+                    <Entry Placeholder="{i18n:Translate RemarksPlaceHolder}"
+                       HeightRequest="100"
+                       Text="{Binding Remarks}"/>
+                    <ActivityIndicator IsRunning="{Binding IsRunning}" Color="Red"/>
+                </StackLayout>
+            </ScrollView>
+            <Button Command="{Binding FinishOrderCommand}"
+                    IsEnabled="{Binding IsEnabled}"
+                    Text="{i18n:Translate FinishOrder}"
+                    VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentPage>

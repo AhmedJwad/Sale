@@ -152,7 +152,7 @@
                 <Button Command="{Binding FinishOrderCommand}" 
                         IsEnabled="{Binding IsEnabled}"
                         Text="{i18n:Translate FinishOrder}"/>
-            </StackLayout>
+            </StackLayout>          
         </StackLayout>
     </AbsoluteLayout>
 </ContentPage>

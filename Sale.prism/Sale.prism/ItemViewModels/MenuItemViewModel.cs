@@ -29,6 +29,7 @@ namespace Sale.prism.ItemViewModels
             {
                 Settings.IsLogin = false;
                 Settings.Token = null;
+                Settings.OrderDetails = null;
             }
             if(IsLoginRequired && !Settings.IsLogin)
             {

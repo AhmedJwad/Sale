@@ -60,7 +60,7 @@ namespace Sale.prism.ViewModels
             get => _totalItems;
             set => SetProperty(ref _totalItems, value);
         }
-        private float TotalQuantity
+       public float TotalQuantity
         {
             get => _totalQuantity;
             set => SetProperty(ref _totalQuantity, value);
@@ -102,9 +102,10 @@ namespace Sale.prism.ViewModels
         public DelegateCommand FinishOrderCommand => _finishOrderCommand ??
             (_finishOrderCommand = new DelegateCommand(FinishOrderasync));
 
-        private void FinishOrderasync()
+        private async void FinishOrderasync()
         {
-            throw new NotImplementedException();
+            await _navigationService.NavigateAsync(nameof(FinishOrderPage));
+
         }
 
         public DelegateCommand ClearAllCommand => _clearAllCommand ??

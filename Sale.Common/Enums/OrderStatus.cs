@@ -9,6 +9,7 @@ namespace Sale.Common.Enums
         Pending,
         Spreading,
         Sent,
-        Confirmed
+        Confirmed,
+        Cancelled
     }
 }

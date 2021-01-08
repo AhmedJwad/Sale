@@ -10,6 +10,7 @@ namespace Sale.Common.Entities
 
         [MaxLength(50 , ErrorMessage ="the field {0} must be containe less tha {1}")]
         [Required]
+        [Display(Name = "Country")]
         public string Name { get; set; }
 
         public ICollection<Department>Departments { get; set; }

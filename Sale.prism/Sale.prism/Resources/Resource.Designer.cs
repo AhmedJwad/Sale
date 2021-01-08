@@ -286,6 +286,24 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must enter your credit card number..
+        /// </summary>
+        public static string CreditCardError {
+            get {
+                return ResourceManager.GetString("CreditCardError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit card not valid.
+        /// </summary>
+        public static string CreditCardNoValid {
+            get {
+                return ResourceManager.GetString("CreditCardNoValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current password.
         /// </summary>
         public static string CurrentPassword {
@@ -309,6 +327,24 @@ namespace Sale.prism.Resources {
         public static string CurrentPasswordPlaceHolder {
             get {
                 return ResourceManager.GetString("CurrentPasswordPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CVV.
+        /// </summary>
+        public static string CVV {
+            get {
+                return ResourceManager.GetString("CVV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter the CVV for your card.
+        /// </summary>
+        public static string CVVError {
+            get {
+                return ResourceManager.GetString("CVVError", resourceCulture);
             }
         }
         
@@ -489,6 +525,24 @@ namespace Sale.prism.Resources {
         public static string Error005 {
             get {
                 return ResourceManager.GetString("Error005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expiry date format yy/mm.
+        /// </summary>
+        public static string Expiry {
+            get {
+                return ResourceManager.GetString("Expiry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter the expiry date for your card..
+        /// </summary>
+        public static string ExpiryError {
+            get {
+                return ResourceManager.GetString("ExpiryError", resourceCulture);
             }
         }
         
@@ -835,6 +889,15 @@ namespace Sale.prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The payment process was not successful..
+        /// </summary>
+        public static string PayNoOk {
+            get {
+                return ResourceManager.GetString("PayNoOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -1056,6 +1119,15 @@ namespace Sale.prism.Resources {
         public static string ShowShoppingCar {
             get {
                 return ResourceManager.GetString("ShowShoppingCar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The payment process was not successful..
+        /// </summary>
+        public static string The_payment_process_was_not_successful_ {
+            get {
+                return ResourceManager.GetString("The payment process was not successful.", resourceCulture);
             }
         }
         

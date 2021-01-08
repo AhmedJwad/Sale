@@ -7,6 +7,7 @@ using Sale.Common.Responses;
 using Sale.Common.Services;
 using Sale.prism.Helpers;
 using Sale.prism.Views;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,17 +23,25 @@ namespace Sale.prism.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ICombosHelper _combosHelper;
         private readonly IApiService _apiService;
+        private readonly string _testApiKey =
+            "pk_test_51I44aYEHIC75aD3PjfR00cO5TjSshZF7ZhdgTURnGQGkNt93hOvFQlzrjgbYlJL2kA4CPTFoFS7HWkznowDRqHTy00mxnTnDKB";
         private bool _isRunning;
         private bool _isEnabled;
         private decimal _totalValue;
         private int _totalItems;
         private float _totalQuantity;
+        private readonly string _testApiKeySecret =
+            "sk_test_51I44aYEHIC75aD3PzFl0uNm7gnEpKsyv8zPqFj7ulPCYGpY6zv3m1Q93Xx5JwjKH7xl4uZj6RNKTvOMfCwTG3wN000WbSXyUum";
         private ObservableCollection<Common.Models.PaymentMethod> _paymentMethods;
         private Common.Models.PaymentMethod _paymentMethod;
         private string _deliveryAddress;
         private List<OrderDetailResponse> _orderDetails;
         private TokenResponse _token;
         private DelegateCommand _finishOrderCommand;
+        private bool _isCreditCard;
+        private Token _stripeToken;
+        private TokenService _tokenService;
+
         public FinishOrderPageViewModel(INavigationService navigationService,
             ICombosHelper combosHelper, IApiService apiService):base(navigationService)
         {
@@ -43,7 +52,11 @@ namespace Sale.prism.ViewModels
             IsEnabled = true;
             PaymentMethods = new ObservableCollection<Common.Models.PaymentMethod>(_combosHelper.GetPaymentMethods());
         }
+        public string CreditCard { get; set; }
+        public string Expiry { get; set; }
+        public string CVV { get; set; }
         public string Remarks { get; set; }
+
         public bool IsRunning
         {
             get => _isRunning;
@@ -74,15 +87,32 @@ namespace Sale.prism.ViewModels
             get => _paymentMethods;
             set => SetProperty(ref _paymentMethods, value);
         }
+        public bool IsCreditCard
+        {
+            get => _isCreditCard;
+            set => SetProperty(ref _isCreditCard, value);
+        }
         public Common.Models.PaymentMethod PaymentMethod
         {
             get => _paymentMethod;
-            set => SetProperty(ref _paymentMethod, value);
+            set
+            {
+                SetProperty(ref _paymentMethod, value);
+               if(_paymentMethod.Id==2)
+                {
+                    IsCreditCard = true;
+                }
+                else
+                {
+                    IsCreditCard = false;
+                }
+            }
+             
         }
         public string DeliveryAddress
         {
             get => _deliveryAddress;
-            set => SetProperty(ref _deliveryAddress, value);
+            set => SetProperty(ref _deliveryAddress, value);                
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -115,6 +145,16 @@ namespace Sale.prism.ViewModels
             }
             IsRunning = true;
             IsEnabled = false;
+            if (PaymentMethod.Id == 2)
+            {
+                bool wasPayed = await PayWithStripeAsync();
+                if (!wasPayed)
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+                    return;
+                }
+            }
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 IsRunning = false;
@@ -146,6 +186,75 @@ namespace Sale.prism.ViewModels
             await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(ProductsPage)}");
         }
 
+        private async Task<bool> PayWithStripeAsync()
+        {
+            await CreateTokenAsync();
+            if (_stripeToken == null)
+            {
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.CreditCardNoValid, Languages.Accept);
+                return false;
+            }
+
+            return await MakePaymentAsync();
+        }
+
+        public async Task<bool> MakePaymentAsync()
+        {
+            try
+            {
+                StripeConfiguration.ApiKey = _testApiKeySecret;
+                ChargeCreateOptions options = new ChargeCreateOptions
+                {
+                    Amount = (long)TotalValue * 100,
+                    Currency = "COP",
+                    Description = $"Order: {DateTime.Now:yyyy/MM/dd hh:mm}",
+                    Capture = true,
+                    ReceiptEmail = _token.User.Email,
+                    Source = _stripeToken.Id
+                };
+
+                ChargeService service = new ChargeService();
+                Charge charge = await service.CreateAsync(options);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                await App.Current.MainPage.DisplayAlert(Languages.Error, //Languages.PayNoOk,
+                    ex.Message ,  Languages.Accept);
+                return false;
+            }
+        }
+
+        public async Task<string> CreateTokenAsync()
+        {
+            try
+            {
+                StripeConfiguration.ApiKey = _testApiKey;
+                ChargeService service = new ChargeService();
+                int year = int.Parse(Expiry.Substring(0, 2));
+                int month = int.Parse(Expiry.Substring(3, 2));
+                TokenCreateOptions tokenOptions = new TokenCreateOptions
+                {
+                    Card = new TokenCardOptions
+                    {
+                        Number = CreditCard,
+                        ExpYear = year,
+                        ExpMonth = month,
+                        Cvc = CVV,
+                        Name = _token.User.FullName
+                    }
+                };
+
+                _tokenService = new TokenService();
+                _stripeToken = await _tokenService.CreateAsync(tokenOptions);
+                return _stripeToken.Id;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         private Common.Enums.PaymentMethod ToPaymentMethod(Common.Models.PaymentMethod paymentMethod)
         {
             switch (paymentMethod.Id)
@@ -168,6 +277,26 @@ namespace Sale.prism.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.DeliveryAddressError, Languages.Accept);
                 return false;
+            }
+            if (PaymentMethod.Id == 2)
+            {
+                if (string.IsNullOrEmpty(CreditCard) || CreditCard.Contains('_'))
+                {
+                    await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.CreditCardError, Languages.Accept);
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(Expiry) || Expiry.Contains('_'))
+                {
+                    await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ExpiryError, Languages.Accept);
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(CVV) || CVV.Contains('_'))
+                {
+                    await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.CVVError, Languages.Accept);
+                    return false;
+                }
             }
 
             return true;

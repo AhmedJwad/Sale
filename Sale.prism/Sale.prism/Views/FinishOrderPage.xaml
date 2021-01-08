@@ -66,6 +66,24 @@
                         ItemsSource="{Binding PaymentMethods}"
                         SelectedItem="{Binding PaymentMethod}"
                         Title="{i18n:Translate PaymentMethodPlaceHolder}"/>
+                    <Label Text="{i18n:Translate CreditCard}"
+                           IsVisible="{Binding IsCreditCard}"/>
+                    <Entry Text="{Binding CreditCard}"                         
+                           Placeholder="0000 0000 0000 0000"
+                           IsVisible="{Binding IsCreditCard}"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i18n:Translate Expiry}"
+                                IsVisible="{Binding IsCreditCard}"/>
+                        <Entry Text="{Binding Expiry}"
+                               IsVisible="{Binding IsCreditCard}"                             
+                               Placeholder="00/00"/>
+                        <Label Text="{i18n:Translate CVV}"
+                               IsVisible="{Binding IsCreditCard}"
+                               HorizontalOptions="FillAndExpand"/>
+                        <Entry Text="{Binding CVV}"                                  
+                               Placeholder="000"
+                               IsVisible="{Binding IsCreditCard}"/>
+                    </StackLayout>
                     <Label Text="{i18n:Translate DeliveryAddress}"/>
                     <Entry Placeholder="{i18n:Translate DeliveryAddressPlaceHolder}"
                        HeightRequest="100"

@@ -104,7 +104,20 @@ namespace Sale.prism.ViewModels
 
         private async void FinishOrderasync()
         {
-            await _navigationService.NavigateAsync(nameof(FinishOrderPage));
+            if (Settings.IsLogin)
+            {
+                await _navigationService.NavigateAsync(nameof(FinishOrderPage));
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.LoginFirstMessage, Languages.Accept);
+                NavigationParameters parameters = new NavigationParameters
+                {
+                    { "pageReturn", nameof(FinishOrderPage) }
+                };
+
+                await _navigationService.NavigateAsync($"/{nameof(OnSaleMasterDetailPage)}/NavigationPage/{nameof(LoginPage)}", parameters);
+            }          
 
         }
 

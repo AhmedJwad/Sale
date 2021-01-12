@@ -483,4 +483,37 @@
   <data name="PaymentMethodPlaceHolder" xml:space="preserve">
     <value>تحديد طريقة الدفع الخاصة بك</value>
   </data>
+  <data name="Order" xml:space="preserve">
+    <value>الطلبية</value>
+  </data>
+  <data name="UpdateRemarks" xml:space="preserve">
+    <value>تحديث الملاحظات!</value>
+  </data>
+  <data name="CancelOrder" xml:space="preserve">
+    <value>إلغاء الأمر</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>حالة الأمر</value>
+  </data>
+  <data name="SearchOrder" xml:space="preserve">
+    <value>أدخل القيمة للبحث ...!</value>
+  </data>
+  <data name="DateSent" xml:space="preserve">
+    <value>تاريخ الإرسال</value>
+  </data>
+  <data name="DateConfirmed" xml:space="preserve">
+    <value>تم التأكيد</value>
+  </data>
+  <data name="RemarksError" xml:space="preserve">
+    <value>يجب عليك إدخال بعض الملاحظات.!</value>
+  </data>
+  <data name="OrderUpdatedOk" xml:space="preserve">
+    <value>الطلب تم تحديثه</value>
+  </data>
+  <data name="CancelOrdenConfirm" xml:space="preserve">
+    <value>هل أنت متأكد من إلغاء الطلب ؟!</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>سؤال</value>
+  </data>
 </root>

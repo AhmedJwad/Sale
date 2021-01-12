@@ -1,21 +1,134 @@
-﻿using Prism.Commands;
+﻿using Newtonsoft.Json;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Sale.Common.Helpers;
+using Sale.Common.Responses;
+using Sale.Common.Services;
 using Sale.prism.Helpers;
+using Sale.prism.ItemViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace Sale.prism.ViewModels
 {
     public class ShowHistoryPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
+        private readonly IApiService _apiService;
+        private DelegateCommand _refreshCommand;
+        private DelegateCommand _searchCommand;
+        private bool _isRefreshing;
+        private ObservableCollection<OrderItemViewModel> _orders;
+        private List<OrderResponse> _myOrders;
+        private string _search;
+        private int _cartNumber;
 
-        public ShowHistoryPageViewModel(INavigationService navigationService ):base(navigationService)
+        public ShowHistoryPageViewModel(INavigationService navigationService, IApiService apiService ):base(navigationService)
         {
            _navigationService = navigationService;
+            _apiService = apiService;
             Title = Languages.ShowPurchaseHistory;
+            LoadOrdersAsync();
+
         }
+
+       
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+        public ObservableCollection<OrderItemViewModel> Orders
+        {
+            get => _orders;
+            set => SetProperty(ref _orders, value);
+        }
+        public string Search
+        {
+            get => _search;
+            set {
+                SetProperty(ref _search, value);
+                ShowOrders();
+                }
+        }
+        private async void LoadOrdersAsync()
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError, Languages.Accept);
+                return;
+            }
+            IsRefreshing = true;
+            TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(Settings.Token);
+            string url = App.Current.Resources["UrlAPI"].ToString();
+            Response response = await _apiService.GetListAsync<OrderResponse>(url, "/api", "/Orders", token.Token);
+            IsRefreshing = false;
+            if(!response.IsSuccess)
+            {
+                await App.Current.MainPage.DisplayAlert(Languages.Error, response.Message,
+                    Languages.Accept);
+                return;
+            }
+            _myOrders = (List<OrderResponse>)response.Result;
+            ShowOrders();
+
+        }
+
+        private void ShowOrders()
+        {
+            if (_myOrders == null)
+            {
+                return;
+            }
+            if(string.IsNullOrEmpty(Search))
+            {
+                Orders = new ObservableCollection<OrderItemViewModel>(_myOrders.Select(o => new OrderItemViewModel
+                  (_navigationService)
+                {
+                    Date = o.Date,
+                    DateConfirmed = o.DateConfirmed,
+                    DateSent = o.DateSent,
+                    Id = o.Id,
+                    OrderDetails = o.OrderDetails,
+                    OrderStatus = o.OrderStatus,
+                    PaymentMethod = o.PaymentMethod,
+                    Remarks = o.Remarks,
+                    User = o.User
+                }).OrderByDescending(o => o.Date).ToList());
+            }
+            else
+            {
+                Orders = new ObservableCollection<OrderItemViewModel>(_myOrders.Select(o => new OrderItemViewModel(_navigationService)
+                {
+                    Date = o.Date,
+                    DateConfirmed = o.DateConfirmed,
+                    DateSent = o.DateSent,
+                    Id = o.Id,
+                    OrderDetails = o.OrderDetails,
+                    OrderStatus = o.OrderStatus,
+                    PaymentMethod = o.PaymentMethod,
+                    Remarks = o.Remarks,
+                    User = o.User
+                })
+           .Where(o => o.Value.ToString().Contains(Search))
+           .OrderByDescending(o => o.Date)
+           .ToList());
+
+            }
+        }
+
+        public DelegateCommand RefreshCommand => _refreshCommand ??
+            (_refreshCommand = new DelegateCommand(LoadOrdersAsync));
+      
+
+        public DelegateCommand SearchCommand => _searchCommand ??
+            (_searchCommand = new DelegateCommand(ShowOrders));
+
+       
     }
 }

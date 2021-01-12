@@ -50,6 +50,7 @@ namespace Sale.prism
             containerRegistry.RegisterForNavigation<AddToCartPage, AddToCartPageViewModel>();
             containerRegistry.RegisterForNavigation<ModifiyOrderPage,ModifiyOrderPageViewModel>();
             containerRegistry.RegisterForNavigation<FinishOrderPage, FinishOrderPageViewModel>();
+            containerRegistry.RegisterForNavigation<OrderPage, OrderPageViewModel>();
             containerRegistry.Register<IRegexHelper, RegexHelper>();
             containerRegistry.Register<IFilesHelper, FilesHelper>();
             containerRegistry.Register<ICombosHelper, CombosHelper>();
